@@ -29,13 +29,6 @@ CREATE TABLE users (
     address VARCHAR(1024),
     password VARCHAR(255)
 );
---start
-CREATE TABLE cart(
-    id SERIAL PRIMARY KEY,
-    userid INT,
-    totalPrice BIGINT,
-    FOREIGN KEY(userid) REFERENCES users(id)
-);
 
 CREATE TABLE cartItem(
     id SERIAL PRIMARY KEY,
@@ -61,3 +54,4 @@ CREATE TABLE productcategories(
     FOREIGN KEY productid REFERENCES product(id)
 );
 
+ALTER TABLE cart ALTER COLUMN totalprice SET DEFAULT 0;

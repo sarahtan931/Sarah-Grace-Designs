@@ -11,7 +11,6 @@ app.use(express.json()); //req.body
 app.use(express.static(path.join(__dirname, '../build'), {dotfiles: 'allow'}));
 
 //ROUTES//
-
 const fileRoute = require('./routes/file');
 app.use('/api/', fileRoute);
 
@@ -22,7 +21,10 @@ const authRoute = require('./routes/auth');
 app.use('/api/', authRoute);
 
 const userRoute = require('./routes/user');
-app.use('/api/', userRoute)
+app.use('/api/', userRoute);
+
+const cartRoute = require('./routes/cart');
+app.use('/api/', cartRoute);
 
 app.listen(8080, () => {
     console.log("server has started on port 8080")
