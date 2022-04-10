@@ -8,7 +8,7 @@ export default function ProductBox(props) {
             <div className="productbox__img">
                 <div className="productbox__imgnohover">
                     <img src={props.url} alt="" />
-                </div>9bundle.js:29374 Uncaught Error: Expected `onMouseOver` listener to be a function, instead got a value of `string` type.
+                </div>
                 <div className="productbox__view">
                         <div className="productbox__viewtext">
                             View More
