@@ -1,0 +1,19 @@
+.blackbutton{
+    background-color: black;
+    width: 12rem;
+    height: 3rem;
+    margin: auto;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__text{
+        color: white;
+        font-size: 1.2rem; 
+    }
+}
+
+.blackbutton:hover{
+    background-color: #99BCFE;
+}

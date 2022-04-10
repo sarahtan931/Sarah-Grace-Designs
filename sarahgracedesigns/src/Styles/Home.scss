@@ -1,0 +1,83 @@
+.shopnew {
+    padding: 2rem;
+    padding-top: 1rem;
+
+    &__slogan {
+        font-size: 3rem;
+        font-family: 'Aclonica', sans-serif;
+        text-align: center;
+        padding-top: 3rem;
+    }
+
+    &__parallax {
+        background-image: url("https://sarahgracedesignsbucket.s3.amazonaws.com/SpringCollectionBackground.jpg");
+        min-height: 500px;
+
+        /* Create the parallax scrolling effect */
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+    }
+
+    &__newcollection {
+        font-size: 5rem;
+        font-family: 'Aclonica', sans-serif;
+    }
+
+    &__shopnow {
+        background-color: #99BCFE;
+        border: none;
+        height: 6rem;
+        width: 18rem;
+        border-radius: 10px;
+        font-size: 2rem;
+        font-family: 'Syncopate', sans-serif;
+        margin-top: 2rem;
+    }
+
+    &__overlay {
+        margin: auto;
+        position: absolute;
+        bottom: 1rem;
+        padding: 2rem;
+    }
+}
+
+.shopfromhome{
+    display: flex;
+    flex: 1 1 0px;
+
+    &__text{
+        font-size: 3rem;
+        font-family: 'Aclonica', sans-serif;
+        text-align: center;
+        padding: 2rem;
+    }
+
+    &__img{
+        padding-left: 15%;
+        width: 70%;
+        height: 80%;
+        object-fit: fill;
+    }
+
+}
+
+.bestsellers{
+    padding-bottom: 2rem;
+    &__title{
+        font-size: 3rem;
+        font-family: 'Aclonica', sans-serif;
+        text-align: center;
+        padding: 0px;
+    }
+
+    &__productsbox{
+        display: flex;
+        justify-content: space-around;
+        margin: 2rem;
+        flex: 1 1;
+    }
+}

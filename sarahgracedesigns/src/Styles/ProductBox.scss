@@ -1,0 +1,55 @@
+.productbox {
+    img {
+        width: 22rem;
+    }
+
+    &__img{
+        position: relative;
+    }
+
+    &__imghover{
+        display: none;
+    }
+
+    &__img:hover &__view {
+        opacity: 1; 
+    }
+
+    &__info {
+        text-align: center;
+    }
+
+    &__view {
+        opacity: 0;
+        background-color: #ffffffe5;
+        font-size: 1.4rem;
+        transition: .5s ease;
+        position: absolute;
+        height: 4rem;
+        bottom: 0rem;
+              width: 100%;
+    }
+
+    &__viewtext {
+        color: black;
+        text-align: center;
+        margin-top: 1rem;
+    }
+
+    &__title {
+        font-size: 2rem;
+        border-bottom: 1px solid black;
+        line-height: 4rem;
+        width: 80%;
+        margin-left: 10%;
+    }
+
+    &__price {
+        font-size: 1.6rem;
+        line-height: 4rem;
+    }
+}
+
+.product-backgroud{
+    width:10rem
+}

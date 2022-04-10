@@ -2,7 +2,6 @@
 
 .footer {
     font-size: 1.2rem;
-    position: fixed;
     bottom: 0%;
     width: 98%;
     margin: 1%;
@@ -34,7 +33,9 @@
 
     &__text {
         text-align: center;
-        padding: .2rem
+        padding: .5rem;
+
+        font-family: 'Syncopate', sans-serif;
     }
 
     &__boxtitle {
