@@ -1,0 +1,48 @@
+@import './Variables.scss';
+
+.footer {
+    font-size: 1.2rem;
+    position: fixed;
+    bottom: 0%;
+    width: 98%;
+    margin: 1%;
+
+    &__boxes {
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+        display: flex;
+
+        @media only screen and (max-width: $bp-mobile) {
+            flex-direction: column;
+        }
+    }
+
+    &__box {
+        flex-grow: 1;
+        flex-basis: 0;
+        padding: 2.2rem;
+    }
+
+    &__verticalline {
+        border-left: 1px solid black;
+
+        @media only screen and (max-width: $bp-mobile) {
+            border-top: 1px solid black;
+            border-left: none;
+        }
+    }
+
+    &__text {
+        text-align: center;
+        padding: .2rem
+    }
+
+    &__boxtitle {
+        font-size: 1.6rem;
+        padding-bottom: 1rem;
+    }
+}
+
+ul {
+    list-style: none;
+}
