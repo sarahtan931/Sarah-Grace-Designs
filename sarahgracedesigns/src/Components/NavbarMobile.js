@@ -21,7 +21,8 @@ const NavbarMobile = () => {
     }
 
     return (
-        <div>
+        <div className='navbar-mobile'>
+            <img src="https://sarahgracedesignsbucket.s3.amazonaws.com/SarahGraceLogo.png" alt="" className='mobile-img'/>
             <div onClick={openNav} className='nav-header'><p className='nav-mobile-name'>
             </p><FontAwesomeIcon className='bars' icon={faBars}></FontAwesomeIcon></div>
             <div id="myNav" className="overlay">

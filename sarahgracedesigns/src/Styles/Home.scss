@@ -72,12 +72,12 @@
         font-family: 'Aclonica', sans-serif;
         text-align: center;
         padding: 0px;
+        padding-bottom: 1rem;
     }
 
     &__productsbox{
-        display: flex;
-        justify-content: space-around;
-        margin: 2rem;
-        flex: 1 1;
+        display: grid;
+        grid-template-columns: repeat(4, auto);
+        flex: auto;
     }
 }

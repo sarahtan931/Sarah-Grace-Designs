@@ -17,12 +17,20 @@ export default function Shop(props) {
     }
   }, []);
 
+  const getProducts = category => () => {
+    axios.get(`http://localhost:8080/api/products/${category}`).then((response) => {
+      setProducts(response.data);
+    }).catch((err) => { 
+      console.log(err)
+    });
+  }
+
   const Products = () => {
     return (
       products.map((data) => {
         return (
           <div key={data.id}>
-            <ProductBox title={data.title} url={data.productimgurl} price={data.price}/>
+            <ProductBox title={data.title} url={data.productimgurl} price={data.price} id={data.id} />
           </div>
         );
       })
@@ -41,7 +49,8 @@ export default function Shop(props) {
       <div className='shop__body'>
         <div className="shop__categorys">
           <ul>
-            <li>All</li>
+            <li onClick={getProducts('')}>All</li>
+            <li onClick={getProducts('bestsellers')}>Best Sellers</li>
             <li>New Collection</li>
             <li>Home</li>
             <li>Accessories</li>

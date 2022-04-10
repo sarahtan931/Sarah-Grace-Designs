@@ -19,7 +19,7 @@ export const Home = () => {
       bestSellers.map((data) => {
         return (
           <div key={data.id}>
-            <ProductBox title={data.title} url={data.productimgurl} price={data.price}/>
+            <ProductBox title={data.title} url={data.productimgurl} price={data.price} id={data.id}/>
           </div>
         );
       })

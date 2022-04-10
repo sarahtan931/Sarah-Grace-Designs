@@ -14,6 +14,16 @@ router.post("/products", async(req, res) => {
   }
 })
 
+//Get product by id
+router.get("/products/id/:id", async(req, res) => {
+    try{
+        const allProducts = await pool.query(`SELECT * from product WHERE id=${req.params.id} `);
+        res.json(allProducts.rows)
+    }catch(err){
+        console.error(err.message)
+    }
+  })
+
 //Get all products
 router.get("/products", async(req, res) => {
   try{

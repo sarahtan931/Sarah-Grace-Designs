@@ -16,7 +16,11 @@ CREATE TABLE product(
 CREATE TABLE productImage (
     id SERIAL PRIMARY KEY,
     productId INT,
-    productImgUrl VARCHAR(255),
+    url1 VARCHAR(1024),
+    url2 VARCHAR(1024),
+    url3 VARCHAR(1024),
+    url4 VARCHAR(1024),
+    url5 VARCHAR(1024),
 	FOREIGN KEY(productId) REFERENCES product(id)
 );
 
