@@ -1,33 +1,39 @@
 import React from 'react';
 import '../Styles/ProductBox.scss';
 import BlackButton from './BlackButton';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useModal } from 'react-hooks-use-modal';
+import ProductModal from './ProductModal';
 
 export default function ProductBox(props) {
     const navigate = useNavigate();
-
+    const [Modal, openModal, closeModal] = useModal('root', {
+        preventScroll: true,
+        closeOnOverlayClick: true,
+    });
+  
     const ImageHover = () => {
         document.getElementById(props.id).src = "https://sarahgracedesignsbucket.s3.amazonaws.com/Products/GreenBucketHat/GreenBucketHat.jpg";
-      }
+    }
 
-      const NoImageHover = () => {
+    const NoImageHover = () => {
         document.getElementById(props.id).src = props.url;
-      }
+    }
 
-      const QuickView = () => {
-          console.log('going to quick view')
-      }
-
-      const ProductPage = () => {
-        console.log('sending', props.id)
+    const ProductPage = () => {
         navigate(`/product/${props.id}`)
-      }
+    }
+
+    function ModalOpenHelper(e) {
+        e.stopPropagation();
+        openModal();
+    }
 
     return (
         <div className='productbox' >
             <div className="productbox__img" onMouseOver={ImageHover} onMouseLeave={NoImageHover} onClick={ProductPage}>
                 <img src={props.url} alt="" id={props.id} />
-                <div className="productbox__view" onClick={QuickView}>
+                <div className="productbox__view" onClick={(e) => ModalOpenHelper(e)}>
                     <div className="productbox__viewtext">
                         Quick View
                     </div>
@@ -46,6 +52,12 @@ export default function ProductBox(props) {
                 </div>
             </div>
 
+
+            <Modal>
+                <div >
+                    <ProductModal url={props.url} title={props.title} serialno={props.serialno} price={props.price} quantity={props.quantity}></ProductModal>
+                </div> 
+            </Modal>
         </div>
     )
 }

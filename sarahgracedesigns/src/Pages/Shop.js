@@ -3,6 +3,7 @@ import '../Styles/Shop.scss';
 import axios from 'axios';
 import ProductBox from '../Components/ProductBox';
 
+
 export default function Shop(props) {
   const [products, setProducts] = useState([]);
 
@@ -18,7 +19,11 @@ export default function Shop(props) {
   }, []);
 
   const getProducts = category => () => {
-    axios.get(`http://localhost:8080/api/products/${category}`).then((response) => {
+    var url = `http://localhost:8080/api/products/category/${category}`;
+    if (category == ''){
+      url = `http://localhost:8080/api/products`
+    }
+    axios.get(url).then((response) => {
       setProducts(response.data);
     }).catch((err) => { 
       console.log(err)
@@ -30,7 +35,7 @@ export default function Shop(props) {
       products.map((data) => {
         return (
           <div key={data.id}>
-            <ProductBox title={data.title} url={data.productimgurl} price={data.price} id={data.id} />
+            <ProductBox title={data.title} url={data.productimgurl} price={data.price} id={data.id} serialno={data.serialno} quantity={data.quantity}/>
           </div>
         );
       })

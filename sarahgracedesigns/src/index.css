@@ -35,3 +35,6 @@ code {
     monospace;
 }
 
+select{
+  width: 6rem;
+}

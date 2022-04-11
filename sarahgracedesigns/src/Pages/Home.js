@@ -7,8 +7,9 @@ export const Home = () => {
   const [bestSellers, setBestSellers] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/products/bestsellers`).then((response) => {
+    axios.get(`http://localhost:8080/api/products/category/bestsellers`).then((response) => {
       setBestSellers(response.data);
+      console.log(response.data)
     }).catch((err) => { 
       console.log(error)
     });
@@ -18,8 +19,8 @@ export const Home = () => {
     return (
       bestSellers.map((data) => {
         return (
-          <div key={data.id}>
-            <ProductBox title={data.title} url={data.productimgurl} price={data.price} id={data.id}/>
+          <div key={data.productid}>
+            <ProductBox title={data.title} url={data.productimgurl} price={data.price} id={data.productid} serialNo={data.serialno} quantity={data.quantity}/>
           </div>
         );
       })
