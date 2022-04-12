@@ -5,15 +5,16 @@ import { useNavigate } from 'react-router-dom';
 import { useModal } from 'react-hooks-use-modal';
 import ProductModal from './ProductModal';
 
+
 export default function ProductBox(props) {
     const navigate = useNavigate();
     const [Modal, openModal, closeModal] = useModal('root', {
         preventScroll: true,
         closeOnOverlayClick: true,
     });
-  
+
     const ImageHover = () => {
-        document.getElementById(props.id).src = "https://sarahgracedesignsbucket.s3.amazonaws.com/Products/GreenBucketHat/GreenBucketHat.jpg";
+        document.getElementById(props.id).src = props.productimgurlhover;
     }
 
     const NoImageHover = () => {
@@ -29,10 +30,16 @@ export default function ProductBox(props) {
         openModal();
     }
 
+    const callbackModal = () => {
+        closeModal();
+    }
+
     return (
         <div className='productbox' >
             <div className="productbox__img" onMouseOver={ImageHover} onMouseLeave={NoImageHover} onClick={ProductPage}>
-                <img src={props.url} alt="" id={props.id} />
+                <div className='productbox__imgbox'>
+                    <img src={props.url} alt="" id={props.id} className="productbox__mainimg" />
+                </div>
                 <div className="productbox__view" onClick={(e) => ModalOpenHelper(e)}>
                     <div className="productbox__viewtext">
                         Quick View
@@ -55,8 +62,9 @@ export default function ProductBox(props) {
 
             <Modal>
                 <div >
-                    <ProductModal url={props.url} title={props.title} serialno={props.serialno} price={props.price} quantity={props.quantity}></ProductModal>
-                </div> 
+                    <ProductModal url={props.url} title={props.title} serialno={props.serialno} price={props.price} quantity={props.quantity} callbackModal={callbackModal}>
+                    </ProductModal>
+                </div>
             </Modal>
         </div>
     )

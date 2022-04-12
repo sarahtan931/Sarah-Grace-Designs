@@ -11,9 +11,8 @@ const Navbar = () => {
                 <img className='navbar__logoimg' src="https://sarahgracedesignsbucket.s3.amazonaws.com/SarahGraceLogo.png" alt="" />
             </div>
             <div className="navbar__links">
-                <Link to='/' className="navbar__list" >Home</Link>
-                <Link to='/shop' className="navbar__list">New</Link>
-                <Link to='/shop' className="navbar__list">Shop</Link>
+                <Link to='/'  className='navbar__list'>Home</Link>
+                <Link to='/shop'  className='navbar__list'>Shop</Link>
             </div>
             <div className="navbar__icons">
                 <FontAwesomeIcon icon={faUser} className='navbar__icon'></FontAwesomeIcon>

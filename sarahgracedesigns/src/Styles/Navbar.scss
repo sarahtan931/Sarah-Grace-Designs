@@ -1,5 +1,8 @@
 @import './Variables.scss';
 
+.active{
+  color: blue;
+}
 .navbar {
 
   @media only screen and (max-width: $bp-mobile) {
@@ -8,8 +11,7 @@
 
   display: flex;
   align-items: center;
-  margin: 1rem;
-  padding: .2rem;
+  padding: 1rem;
   border-bottom: 1px black solid;
 
   &__icons,
@@ -43,8 +45,10 @@
     @media only screen and (max-width: $bp-mobile) {
       font-size: 4rem;
     }
-
-
+  }
+  
+  &__list:hover{
+    font-weight: 500;
   }
 
   &__links {

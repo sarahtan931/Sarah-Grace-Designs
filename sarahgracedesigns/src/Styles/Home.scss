@@ -37,6 +37,11 @@
         margin-top: 2rem;
     }
 
+    &__shopnow:hover{
+        cursor: pointer;
+        background-color: #819fd6;
+    }
+
     &__overlay {
         margin: auto;
         position: absolute;
@@ -61,6 +66,18 @@
         width: 70%;
         height: 80%;
         object-fit: fill;
+    }
+
+    &__fashion:hover{
+        transition: all .5s;
+        transform: scale(1.02);
+        cursor: pointer;
+    }
+
+    &__home:hover{
+        transition: all .5s;
+        transform: scale(1.02);
+        cursor: pointer;
     }
 
 }

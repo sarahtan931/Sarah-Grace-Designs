@@ -16,6 +16,8 @@ const App = () => (
     <Routes>
       <Route exact path="/" element={<Home></Home>} />
       <Route path="/shop" element={<Shop></Shop>} />
+      <Route path="/shop/fashion" element={<Shop category={"fashion"}></Shop>} />
+      <Route path="/shop/home" element={<Shop category={"home"}></Shop>} />
       <Route path="/product/:id" element={<ProductPage></ProductPage>}></Route>
     </Routes>
     <Footer></Footer>

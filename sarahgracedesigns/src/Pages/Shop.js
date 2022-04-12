@@ -2,14 +2,33 @@ import React, { useState, useEffect } from 'react'
 import '../Styles/Shop.scss';
 import axios from 'axios';
 import ProductBox from '../Components/ProductBox';
+import SortDropdown from '../Components/SortDropdown';
 
 
 export default function Shop(props) {
   const [products, setProducts] = useState([]);
-
+  const [category, setCategory] = useState("All");
 
   useEffect(() => {
-    if (true) {
+    if (props.category != null && props.category == "fashion") {
+      setCategory("Fashion");
+      axios.get(`http://localhost:8080/api/products/category/accessories`).then((response) => {
+        setProducts(response.data);
+      }).catch((err) => {
+        console.log(err)
+      });
+    }
+
+    if (props.category != null && props.category == "home") {
+      setCategory("Home Decor");
+      axios.get(`http://localhost:8080/api/products/category/home`).then((response) => {
+        setProducts(response.data);
+      }).catch((err) => {
+        console.log(err)
+      });
+    }
+
+    if (props.category == null) {
       axios.get(`http://localhost:8080/api/products`).then((response) => {
         setProducts(response.data);
       }).catch((err) => {
@@ -18,28 +37,42 @@ export default function Shop(props) {
     }
   }, []);
 
-  const getProducts = category => () => {
+  const getProducts = (category, categorytitle) => () => {
     var url = `http://localhost:8080/api/products/category/${category}`;
-    if (category == ''){
+    setCategory(categorytitle);
+
+    if (category == '') {
       url = `http://localhost:8080/api/products`
     }
+
     axios.get(url).then((response) => {
       setProducts(response.data);
-    }).catch((err) => { 
+    }).catch((err) => {
       console.log(err)
     });
   }
+
 
   const Products = () => {
     return (
       products.map((data) => {
         return (
           <div key={data.id}>
-            <ProductBox title={data.title} url={data.productimgurl} price={data.price} id={data.id} serialno={data.serialno} quantity={data.quantity}/>
+            <ProductBox title={data.title} url={data.productimgurl} price={data.price} id={data.id} serialno={data.serialno} quantity={data.quantity} productimgurlhover={data.productimgurlhover} />
           </div>
         );
       })
     )
+  }
+
+  const updateSort = (sort) => {
+    if (sort == "Low/High") {
+      const lowtohigh = products.sort((a, b) => a.price - b.price);
+      setProducts([...lowtohigh]);
+    } else {
+      const hightolow = products.sort((a, b) => b.price - a.price);
+      setProducts([...hightolow]);
+    }
   }
 
 
@@ -48,19 +81,21 @@ export default function Shop(props) {
       <div className="shop__logo"> Handmade Designs - Made With Love</div>
       <div className="shop__header">
         <div className='shop__headertitle'>Browse By</div>
-        <div className='shop__headertitle shop__headertitlemiddle'>All</div>
-        <div className='shop__headertitle shop__headertitleright'>Sort</div>
+        <div className='shop__headertitle shop__headertitlemiddle'>{category}</div>
+        <div className='shop__headertitle shop__headertitleright'>Sort
+          <SortDropdown update={updateSort}></SortDropdown>
+        </div>
       </div>
       <div className='shop__body'>
         <div className="shop__categorys">
           <ul>
-            <li onClick={getProducts('')}>All</li>
-            <li onClick={getProducts('bestsellers')}>Best Sellers</li>
-            <li>New Collection</li>
-            <li>Home</li>
-            <li>Accessories</li>
-            <li>Crochet</li>
-            <li>Beads</li>
+            <li onClick={getProducts('', "All")}>All</li>
+            <li onClick={getProducts('new', "New")} >New</li>
+            <li onClick={getProducts('bestsellers', "Best Sellers")}>Best Sellers</li>
+            <li onClick={getProducts('home', "Home")}>Home</li>
+            <li onClick={getProducts('accessories', "Accessories")}>Accessories</li>
+            <li onClick={getProducts('crochet', "Crochet")}>Crochet</li>
+            <li onClick={getProducts('beads', "Beads")}>Beads</li>
           </ul>
         </div>
         <div className="shop__products">

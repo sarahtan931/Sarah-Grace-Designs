@@ -1,12 +1,17 @@
-import React from 'react'
+import React, {useState} from 'react';
+import '../Styles/Dropdown.scss';
 
 export default function QuantityDropdown(props) {
+    const [selectedValue, setSelectedValue] = useState(0);
 
     const Options = () => {
         let options = props.quantity + 1;
-        options = 5;
+        if (props.quantity == undefined){
+          options = 5
+
+        }
+        
         let array = Array.from(Array(options).keys());
-        console.log('test',array, props.quantity)
         return (
           array.map((data) => {
             return (
@@ -16,9 +21,14 @@ export default function QuantityDropdown(props) {
         )
       }
 
+      function handleChange(e) {
+        setSelectedValue(e.target.value)
+        props.update(e.target.value);
+      }
+
     return (
         <div>
-            <select>
+            <select onChange={(e) => handleChange(e)} value={selectedValue} className="quantitydropdown">
                 <Options></Options>
             </select>
         </div>

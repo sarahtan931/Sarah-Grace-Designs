@@ -9,6 +9,7 @@
 
     &__headerbold{
         font-weight: 400;
+        cursor: pointer;
     }
 
     &__imagegallery{
@@ -19,8 +20,11 @@
     }
 
     &__imagegrid{
-        display: flex;
-        width: 100%;
+        padding-top: 1rem;
+        display: grid;
+        grid-template-columns: repeat(5,1fr);
+        grid-column-gap: 1rem;
+        grid-row-gap: 1rem;
     }
 
     &__description{
@@ -30,7 +34,7 @@
     &__body{
         display: flex ;
         flex: 1 1;
-        justify-content: space-evenly;
+        justify-content: center;
     }
 
     &__mainimage{
@@ -40,14 +44,14 @@
     }
 
     &__imagesmall{
-        width: 20%;
-        padding-top: 1rem;
-        padding-right: 1rem;
+        width: 100%;
+        
     }
 
     &__information{
         font-size: 2rem;
-        width: 44%;
+        width: 38%;
+        padding-left: 5rem;
     }
 
     &__buttonsstyle{
@@ -93,7 +97,6 @@
     margin-bottom: 4rem;
 
     &__colorphoto{
-        background-color: pink;
         width: 20px;
         height: 20px;
         border-radius: 10rem;
@@ -112,15 +115,30 @@
     &__accordian{
         width: 100%;
         background-color: white;
-        border-bottom: 1px solid black;
+        border-top: 1px solid black;
       
         height: 6rem;
         display: flex;
         align-items: center;
+        justify-content: space-between;
+    }
+
+    &__accordian:hover{
+        transform: scale(1.02);
+        transition: all .5s;
     }
 
     &__open{
         font-size: 1.6rem;
         padding-bottom: 2rem;
+        transition: all .5s;
+    }
+
+    &__closed{
+        display:none;
+    }
+
+    &__icon{
+        font-size: 1.5rem;
     }
 }

@@ -5,8 +5,8 @@ const pool = require("../db");
 //Add product 
 router.post("/products", async(req, res) => {
   try{
-      const {price, color, title, productdesc, size, serialNo, quantity, productimgurl} = req.body;
-      const newProduct = await pool.query(`INSERT INTO product (price, color, title, productdesc, size, serialno, quantity, productimgurl) VALUES (${price}, '${color}', '${title}', '${productdesc}', '${size}', '${serialNo}', ${quantity}, '${productimgurl}') RETURNING *`)
+      const {price, color, title, productdesc, size, serialNo, quantity, productimgurl, productimgurlhover} = req.body;
+      const newProduct = await pool.query(`INSERT INTO product (price, color, title, productdesc, size, serialno, quantity, productimgurl, productimgurlhover) VALUES (${price}, '${color}', '${title}', '${productdesc}', '${size}', '${serialNo}', ${quantity}, '${productimgurl}', '${productimgurlhover}') RETURNING *`)
       res.json(newProduct)
   } catch(err){
       console.error(err.message)

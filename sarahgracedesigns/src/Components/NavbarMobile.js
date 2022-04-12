@@ -29,7 +29,6 @@ const NavbarMobile = () => {
                 <div href="" className="closebtn" onClick={closeNav('')}>&times;</div>
                 <div className="overlay-content">
                     <p className="navbar__list"  onClick={closeNav('/')}>Home</p>
-                    <p className="navbar__list" onClick={closeNav('/shop')}>New</p>
                     <p className="navbar__list" onClick={closeNav('/shop')}>Shop</p>
                 </div>
             </div>
