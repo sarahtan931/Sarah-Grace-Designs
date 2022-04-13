@@ -1,16 +1,22 @@
 @import './Variables.scss';
 
 .login{
+    //calculating height to stick footer to bottom
     height: calc(100vh - 175px);
+
     
+    //if login is tall enough allow scroll for footer
     @media only screen and (max-height: 700px) {
         height: auto;
     }
-
+    
+    //calculating mobile login height to stick footer to bottom
     @media only screen and (max-width: $bp-mobile) {
         height: calc(100vh - 300px);
     }
 
+    
+    //if mobile login is tall enough allow scroll for footer
     @media only screen and (max-height: 750px)  and (max-width: $bp-mobile) {
         height: auto
     }
@@ -30,7 +36,8 @@
             justify-content: space-evenly;
             height: 50vh;
         }
-
+        
+        //making login content auto fit
         @media only screen and (max-height: 750px)  and (max-width: $bp-mobile) {
             height: auto
         }
@@ -43,6 +50,8 @@
 
     &__img{
         margin: 2rem;
+        
+        //header image
         @media only screen and (max-width: $bp-mobile) {
             padding-top: 10rem;
         }

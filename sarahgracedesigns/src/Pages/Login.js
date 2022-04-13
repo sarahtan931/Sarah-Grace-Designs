@@ -2,12 +2,23 @@ import React from 'react';
 import '../Styles/Login.scss';
 import { faBagShopping, faTruckFast } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Footer from '../Components/Footer';
+import { useNavigate } from 'react-router-dom';
+;
 
 export default function Login() {
+    const navigate = useNavigate();
+
+    const navigateShopping = () => {
+        navigate('/shop')
+      }
+    
+      const navigateRegister = () => {
+        navigate('/register')
+      }
+
     return (
         <div className='login'>
-            <div className="login__back">
+            <div className="login__back" onClick={navigateShopping}>
                 Back to Shopping
             </div>
             <div className="login__content">
@@ -20,7 +31,7 @@ export default function Login() {
                     </p>
                     <p className="login__perks">
                         <FontAwesomeIcon icon={faBagShopping}></FontAwesomeIcon> &nbsp;
-                        Expess Checkout
+                        Express Checkout
                     </p>
                     <p className="login__perks">
                         <FontAwesomeIcon icon={faTruckFast}></FontAwesomeIcon> &nbsp;
@@ -39,7 +50,7 @@ export default function Login() {
                             Login
                         </div>
                     </div>
-                    <p className='registerroute'>
+                    <p className='registerroute' onClick={navigateRegister}>
                         Dont have an account? Register
                     </p>
                 </div>

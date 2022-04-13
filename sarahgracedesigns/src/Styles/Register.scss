@@ -1,17 +1,21 @@
 @import './Variables.scss';
 
 .register {
+    //calculating height to stick footer to bottom
     height: calc(100vh - 175px);
 
+    //if register is tall enough allow scroll for footer
     @media only screen and (max-height: 700px) {
         height: auto;
     }
 
+    //calculating mobile height to stick footer to bottom
     @media only screen and (max-width: $bp-mobile) {
         height: calc(100vh - 240px);
     }
 
-    @media only screen and (max-height: 870px)  and (max-width: $bp-mobile) {
+    //if mobile register is tall enough allow scroll for footer
+    @media only screen and (max-height: 870px) and (max-width: $bp-mobile) {
         height: auto
     }
 
@@ -31,7 +35,8 @@
             height: auto;
         }
 
-        @media only screen and (max-height: 870px)  and (max-width: $bp-mobile) {
+        //making register content auto fit
+        @media only screen and (max-height: 870px) and (max-width: $bp-mobile) {
             height: auto
         }
 
@@ -42,7 +47,8 @@
 
     &__img {
         margin: 2rem;
-        
+
+        //header image
         @media only screen and (max-width: $bp-mobile) {
             padding-top: 10rem;
         }
@@ -72,9 +78,21 @@
         width: 100%;
     }
 
+    &__inputflex{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__inputsmall{
+        width: 46%;
+    }
+
+    &__inputbig{
+        width: 98%;
+    }
+
     &__input {
         border: 1px solid black;
-        width: 98%;
         border-radius: 5px;
         height: 4rem;
         margin-top: 1rem;
