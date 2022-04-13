@@ -3,6 +3,8 @@ import '../Styles/Shop.scss';
 import axios from 'axios';
 import ProductBox from '../Components/ProductBox';
 import SortDropdown from '../Components/SortDropdown';
+import Navbar from '../Components/Navbar';
+import NavbarMobile from '../Components/NavbarMobile';
 
 
 export default function Shop(props) {
@@ -78,6 +80,8 @@ export default function Shop(props) {
 
   return (
     <div className='shop'>
+      <Navbar></Navbar>
+      <NavbarMobile></NavbarMobile>
       <div className="shop__logo"> Handmade Designs - Made With Love</div>
       <div className="shop__header">
         <div className='shop__headertitle'>Browse By</div>

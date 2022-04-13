@@ -6,6 +6,8 @@ import QuantityDropdown from '../Components/QuantityDropdown';
 import ProductMoreInfo from '../Components/ProductMoreInfo';
 import ColorPicker from '../Components/ColorPicker';
 import {useNavigate} from 'react-router-dom';
+import Navbar from '../Components/Navbar';
+import NavbarMobile from '../Components/NavbarMobile';
 
 export default function ProductPage(props) {
     const { id } = useParams()
@@ -85,6 +87,8 @@ export default function ProductPage(props) {
 
     return (
         <div className="product">
+            <Navbar></Navbar>
+            <NavbarMobile></NavbarMobile>
             <div className="product__header">
                 <strong onClick={routeToShop} className='product__headerbold'>Shop</strong> / {product?.title}
             </div>

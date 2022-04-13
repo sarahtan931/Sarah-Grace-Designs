@@ -3,6 +3,9 @@ import '../Styles/Home.scss';
 import axios from 'axios';
 import ProductBox from '../Components/ProductBox';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../Components/Navbar';
+import NavbarMobile from '../Components/NavbarMobile';
+import Footer from '../Components/Footer';
 
 export const Home = (props) => {
   const [bestSellers, setBestSellers] = useState([]);
@@ -44,6 +47,8 @@ export const Home = (props) => {
 
   return (
     <div>
+      <Navbar></Navbar>
+      <NavbarMobile></NavbarMobile>
       {/*Header image for newest collection */}
       <div className="shopnew">
         <div className="shopnew__parallax">
