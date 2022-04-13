@@ -45,6 +45,7 @@
 
     &__imagesmall{
         width: 100%;
+        cursor: pointer;
         
     }
 
@@ -67,11 +68,13 @@
 
     &__addtocart{
         border: 1px solid black;
+        cursor: pointer;
     }
 
     &__buynow{
         background-color: black;
-        color: white
+        color: white;
+        cursor: pointer;
     }
 
     &__title, &__price{
@@ -121,6 +124,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        cursor: pointer;
     }
 
     &__accordian:hover{

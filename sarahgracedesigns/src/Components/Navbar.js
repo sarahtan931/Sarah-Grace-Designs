@@ -11,10 +11,14 @@ const Navbar = () => {
     const navigateLogin = () => {
         navigate('/login')
     }
+
+    const navigateHome = () => {
+        navigate('/')
+    }
     return (
         <div className='navbar'>
             <div className="navbar__logo">
-                <img className='navbar__logoimg' src="https://sarahgracedesignsbucket.s3.amazonaws.com/SarahGraceLogo.png" alt="" />
+                <img className='navbar__logoimg' src="https://sarahgracedesignsbucket.s3.amazonaws.com/SarahGraceLogo.png" alt="" onClick={navigateHome} />
             </div>
             <div className="navbar__links">
                 <Link to='/'  className='navbar__list'>Home</Link>
