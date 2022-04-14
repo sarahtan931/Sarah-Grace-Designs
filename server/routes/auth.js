@@ -5,7 +5,7 @@ const utils = require('../strategy/utils.js');
 const sanitizeHtml = require('sanitize-html');
 const Joi = require('joi-plus');
 const validEmail = Joi.string().max(256).min(1).email();
-const validPass = Joi.string().max(20).min(6).trim().escape();
+const validPass = Joi.string().max(20).min(5).trim().escape();
 const validFirstName = Joi.string().max(500).min(1).trim().escape().sanitize(sanitizeHtml);
 const validLastName = Joi.string().max(500).min(1).trim().escape().sanitize(sanitizeHtml);
 const express = require('express');
@@ -71,13 +71,9 @@ router.post('/login', (req, res, next) => {
     } else {
       //if valid input login user
       login.authenticate('login', function(err, user, info) {
-        if (err) {
-          res.status(400).send('Login failed');
-        } else if (!user) {
-          //if user is not in the db 
-          res.status(400).send('Login failed, Cannot find user');
+        if (info) {
+          res.status(400).send({info: info});
         } else {
-
           //issue jwt token and send to user
           const jwt = utils.issueJWT(user);
           res.status(200).send({success: `Logged in ${user.email}`, token: jwt.token, expiresIn: jwt.expires, email: user.email});

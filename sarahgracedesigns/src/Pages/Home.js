@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import '../Styles/Home.scss';
 import axios from 'axios';
 import ProductBox from '../Components/ProductBox';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Navbar from '../Components/Navbar';
 import NavbarMobile from '../Components/NavbarMobile';
 import Footer from '../Components/Footer';
@@ -10,6 +10,7 @@ import Footer from '../Components/Footer';
 export const Home = (props) => {
   const [bestSellers, setBestSellers] = useState([]);
   const navigate = useNavigate();
+
 
   useEffect(() => {
     axios.get(`http://localhost:8080/api/products/category/bestsellers`).then((response) => {

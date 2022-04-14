@@ -20,14 +20,13 @@ loginPass.use('login',
                   //if the passwords match return the user
                   return done(null, user);
                 } else {
-                  //if the passwords do not match return error message
-                  return done(null, false, {message: 'Wrong password'});
+                  return done(null, user, 'Error | Wrong Password')
                 }
               });
         }
       }catch(err){
-        //if there is an error, return the message
-        return done(null, false, {message: err});
+          //if the passwords do not match return error message
+          return done(null, false, 'Error | Cannot find User');
       }
     }),
 );
