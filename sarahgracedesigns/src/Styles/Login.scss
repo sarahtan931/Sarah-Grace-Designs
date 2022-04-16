@@ -6,7 +6,7 @@
 
     
     //if login is tall enough allow scroll for footer
-    @media only screen and (max-height: 700px) {
+    @media only screen and (max-height: 575px) {
         height: auto;
     }
     
@@ -42,7 +42,7 @@
             height: auto
         }
 
-        @media only screen and (max-height: 700px) {
+        @media only screen and (max-height: 575px) {
             height: auto;
         }
         

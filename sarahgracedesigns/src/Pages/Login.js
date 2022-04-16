@@ -28,8 +28,12 @@ export default function Login() {
     if (reEmail.test(email)) {
       onSubmit({ email: email.toLowerCase(), password: password });
     } else {
-      //handleerror
-      setErrText('Please input a valid email')
+      if(email){
+        setErrText('Please input a valid email')
+      } else if (email == "" || password == ""){
+        setErrText('Please fill out all fields')
+      }
+    
     }
   };
 
@@ -52,6 +56,7 @@ export default function Login() {
               localStorage.setItem('isAuth', true);
               localStorage.setItem('token', data.token);
               localStorage.setItem('email', data.email);
+              localStorage.setItem('name', data.name);
               // Routes the logged in user to the proper dashboard based on their catagort in the DB
               navigate('/');
             });

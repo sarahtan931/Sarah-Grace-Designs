@@ -45,14 +45,14 @@ router.post('/register', async(req, res, next) => {
 
                     //issue jwt token and send to the user
                     const jwt = utils.issueJWT(user);
-                    output = { success: `logged in ${email}`, user: user, token: jwt.token, expiresIn: jwt.expires, email: user.email };
+                    output = { success: `logged in ${email}`, user: user, token: jwt.token, expiresIn: jwt.expires, email: user.email, name: user.firstname };
                     res.status(200).send(output);
                   }else{
-                    res.status(400).send('User already exists')
+                    res.status(400).send({info: info})
                   }
                 } catch (err) {
                     //catch error and send to the user
-                    res.status(400).send(err);
+                    res.status(400).send({info: err});
                 }
 
             }
@@ -76,7 +76,7 @@ router.post('/login', (req, res, next) => {
         } else {
           //issue jwt token and send to user
           const jwt = utils.issueJWT(user);
-          res.status(200).send({success: `Logged in ${user.email}`, token: jwt.token, expiresIn: jwt.expires, email: user.email});
+          res.status(200).send({success: `Logged in ${user.email}`, token: jwt.token, expiresIn: jwt.expires, email: user.email, name: user.firstname});
         }
       })(req, res, next);
     }

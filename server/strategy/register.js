@@ -20,10 +20,10 @@ registerPass.use(
                     });
                   });
             }else{
-                return done(null, false, {message:err})
+                return done(null, false, 'Error | User Already Exists')
             }
         }catch(err){
-            return done(null, false, {message: err});
+            return done(null, false, 'Error Adding User');
         }
     })
 );
