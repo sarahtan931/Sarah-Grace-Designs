@@ -8,8 +8,10 @@ import ProductPage from './Pages/ProductPage';
 import Footer from './Components/Footer';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
+import Cart from './Pages/Cart';
 
 const App = () => (
+  <div className='content'>
   <Router>
     <Routes>
       <Route exact path="/" element={<Home></Home>} />
@@ -18,10 +20,12 @@ const App = () => (
       <Route path="/shop/home" element={<Shop category={"home"}></Shop>} />
       <Route path="/product/:id" element={<ProductPage></ProductPage>}></Route>
       <Route path="/login" element={<Login></Login>}></Route>
-      <Route path="register" element={<Register></Register>}></Route>
+      <Route path="/register" element={<Register></Register>}></Route>
+      <Route path="/cart" element={<Cart></Cart>}></Route>
     </Routes>
     <Footer></Footer>
   </Router>
+  </div>
 )
 
 export default App;

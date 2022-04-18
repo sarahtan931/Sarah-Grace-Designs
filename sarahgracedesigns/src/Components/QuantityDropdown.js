@@ -1,13 +1,27 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import '../Styles/Dropdown.scss';
 
 export default function QuantityDropdown(props) {
     const [selectedValue, setSelectedValue] = useState(0);
+    const [size, setSize] = useState('quantitydropdown');
 
+    useEffect(() => {
+      if(props.size == "small"){
+        setSize('quantitydropdownsmall')
+      }
+
+      if (props.initial){
+        setSelectedValue(props.initial)
+      }
+  
+  }, []);
+
+
+  
     const Options = () => {
         let options = props.quantity + 1;
         if (props.quantity == undefined){
-          options = 5
+          options = 10;
 
         }
         
@@ -27,8 +41,8 @@ export default function QuantityDropdown(props) {
       }
 
     return (
-        <div>
-            <select onChange={(e) => handleChange(e)} value={selectedValue} className="quantitydropdown">
+        <div className={size}>
+            <select onChange={(e) => handleChange(e)} value={selectedValue} className={size}>
                 <Options></Options>
             </select>
         </div>

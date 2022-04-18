@@ -32,6 +32,10 @@ const Navbar = () => {
         navigate('/')
     }
 
+    const navigateCart = () => {
+        navigate('/cart');
+    }
+
     const GetUserOptions = (bool) => {
         if (bool == false) {
             setShow(false)
@@ -57,6 +61,8 @@ const Navbar = () => {
                         {show &&
                             <div className="useroptions">
                                 <p className="useroptions__option">Account Information</p>
+                                <p className="useroptions__option">My List</p>
+                                <p className="useroptions__option">My Cart</p>
                                 <div className="logoutbutton" onClick={logout}>
                                     Sign Out
                                 </div>
@@ -64,7 +70,7 @@ const Navbar = () => {
                         }
                     </div>
                     <FontAwesomeIcon icon={faUser} onClick={navigateLogin}></FontAwesomeIcon>
-                    <FontAwesomeIcon icon={faCartShopping} className='navbar__icon'></FontAwesomeIcon>
+                    <FontAwesomeIcon icon={faCartShopping} className='navbar__icon' onClick={navigateCart}></FontAwesomeIcon>
                 </div>
             </div>
 

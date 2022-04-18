@@ -1,0 +1,137 @@
+.cart{
+    &__slogan{
+        font-size: 1.8rem;
+        padding: .8rem;
+        font-family: 'Syncopate', sans-serif;
+    }
+
+    &__title{
+        padding: .8rem;
+        font-size: 2rem;
+    }
+
+    &__content{
+        display: flex;
+        height: 70vh;
+    }
+
+    &__itembox{
+        flex-basis: 60%;
+        padding: 2rem;
+        overflow-y: scroll;
+    }
+
+    &__itembox::-webkit-scrollbar-track {
+        padding: 2px 0;
+        background-color: #ffffff;
+      }
+      
+      &__itembox::-webkit-scrollbar {
+        width: 8px;
+      }
+      
+      &__itembox::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        background-color: black
+      }
+
+    &__summarybox{
+        flex-basis: 40%;
+    }
+
+    &__summary{
+        background-color: #F3F5F6;
+        height: 80%;
+        width: 60%;
+        margin: auto;
+        font-size: 2rem;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+}
+
+.summary{
+    &__title{
+        font-size: 2.2rem;
+    }
+
+    &__heading{
+        font-size: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__box{
+        border-top: 1px solid black;
+    }
+
+    &__total{
+        padding-top: 2rem;
+    }
+
+    &__button{
+        padding: 1rem;
+        margin-top: 2rem;
+        background-color: black;
+        color: white;
+        text-align: center;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    &__button:hover{
+        background-color: #7e9bd2;
+    }
+}
+
+.cartitem{   
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+
+    &__remove{
+        font-size: 2rem;
+        position: relative;
+    }
+
+    &__removeicon{
+        top: 0%;
+        right: 0%;
+        position: absolute;
+        padding: 1rem
+    }
+
+    &__name{
+        font-size: 1rem;
+        margin-top: 1rem;
+    }
+
+    &__quantity{
+        font-size: 1.5rem;
+        margin: .5rem;
+    }
+
+    &__serial{
+        font-size: 1.8rem;
+        margin-top: 6rem;
+    }
+
+    &__title, &__price{
+        font-size: 2rem;
+    }
+
+}
+
+.cartbox{
+    height: 18rem;
+    &__img{
+        position: relative;
+        height: 100%;
+    };
+}
