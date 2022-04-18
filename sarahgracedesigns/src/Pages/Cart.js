@@ -8,28 +8,52 @@ import ProductCartBox from '../Components/ProductCartBox';
 
 export default function Cart() {
     const [products, setProducts] = useState([]);
+    const [subtotal, setSubtotal] = useState(0);
+    const email = localStorage.getItem('email');
 
     useEffect(() => {
-        const email = localStorage.getItem('email');
+
         axios.get(`http://localhost:8080/api/cart/${email}`).then((response) => {
-            setProducts(response.data);
-         
+            const sorted = response.data?.sort((a, b) => a.id - b.id);
+            setProducts([...sorted]);
+            let price = 0;
+            response.data?.forEach(item => {
+                price += (item.cartitemquantity * item.price)
+            });
+            setSubtotal(price)
+
         }).catch((err) => {
             console.log(err)
         });
     }, []);
 
+    const UpdateTotal = () => {
+        axios.get(`http://localhost:8080/api/cart/${email}`).then((response) => {
+            const sorted = response.data?.sort((a, b) => a.id - b.id);
+            setProducts([...sorted]);
+            let price = 0;
+            response.data?.forEach(item => {
+                price += (item.cartitemquantity * item.price)
+            });
+            setSubtotal(price)
+        }).catch((err) => {
+            console.log(err)
+        });
+    }
+
+
+
     const Products = () => {
         return (
-          products.map((data) => {
-            return (
-              <div key={data.id}>
-                <ProductCartBox title={data.title} url={data.productimgurl} price={data.price} id={data.id} serialno={data.serialno} quantity={data.quantity}/>
-              </div>
-            );
-          })
+            products.map((data) => {
+                return (
+                    <div key={data.id}>
+                        <ProductCartBox updateTotal={UpdateTotal} title={data.title} userid={data.userid} url={data.productimgurl} price={data.price} id={data.id} serialno={data.serialno} quantity={data.cartitemquantity} productid={data.productid} />
+                    </div>
+                );
+            })
         )
-      }
+    }
 
     return (
         <div>
@@ -48,7 +72,7 @@ export default function Cart() {
                         <Products></Products>
                     </div>
                     <div className="cart__summarybox">
-                        <OrderSummary></OrderSummary>
+                        <OrderSummary subtotal={subtotal}></OrderSummary>
                     </div>
                 </div>
             </div>

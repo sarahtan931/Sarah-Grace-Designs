@@ -73,9 +73,7 @@ export default function ProductPage(props) {
             )
         }
     }
-
-    
-    
+  
 
     const updateQuantity = (quantity) => {
         setQuantity(quantity)
