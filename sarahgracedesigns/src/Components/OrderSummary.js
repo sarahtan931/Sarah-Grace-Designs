@@ -9,6 +9,14 @@ export default function OrderSummary(props) {
         return roundedTotal;
     }
 
+    const GetShipping = () => {
+        if (props.subtotal > 0){
+            return 12;
+        }else{
+            return 0;
+        }
+    }
+
     const GetTax = () => {
         let tax = props.subtotal * .13;
         let roundedTax = Math.round(tax * 100)/ 100;
@@ -24,7 +32,7 @@ export default function OrderSummary(props) {
             </div>
             <div className='summary__heading'>
                 <p>Shipping Estimate</p>
-                <p>$12.00</p>
+             <p> $<GetShipping></GetShipping>.00 </p>
             </div>
             <div className='summary__heading'>
                 <p>Tax Estimate</p>

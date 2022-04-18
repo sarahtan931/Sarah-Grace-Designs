@@ -12,7 +12,6 @@ export default function Cart() {
     const email = localStorage.getItem('email');
 
     useEffect(() => {
-
         axios.get(`http://localhost:8080/api/cart/${email}`).then((response) => {
             const sorted = response.data?.sort((a, b) => a.id - b.id);
             setProducts([...sorted]);
@@ -68,6 +67,9 @@ export default function Cart() {
                     </p>
                 </div>
                 <div className="cart__content">
+                    {products.length == 0 &&
+                        <div className="cart__empty">Empty</div>
+                    }
                     <div className="cart__itembox">
                         <Products></Products>
                     </div>

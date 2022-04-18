@@ -1,13 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../Styles/ProductModal.scss';
 import QuantityDropdown from './QuantityDropdown';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate } from 'react-router-dom';
 
 export default function ProductModal(props) {
-    function close(){
+    const [quantity, setQuantity] = useState(0);
+    const navigate = useNavigate()
+
+
+    const updateQuantity = (quantity) => {
+        setQuantity(quantity)
+    }
+
+    const NavigateProduct = () => {
+        navigate(`/product/${props.id}`)
+    }
+
+    function close() {
         props.callbackModal();
     }
+
+    function add() {
+        props.addToCart(props.id, quantity);
+    }
+
     return (
         <div className='modal'>
             <img src={props.url} alt="" className='modal__img' />
@@ -29,14 +47,14 @@ export default function ProductModal(props) {
                 <div className="modal__quantity modal__element">
                     <div className="">
                         Quantity
-                        <QuantityDropdown quantity={props.quantity}></QuantityDropdown>
+                        <QuantityDropdown quantity={props.quantity} update={updateQuantity}></QuantityDropdown>
                     </div>
                 </div>
                 <div className="modal__element">
-                    <div className="modal__button">
+                    <div className="modal__button" onClick={add}>
                         Add to Cart
                     </div>
-                    <p className="modal__viewmore">
+                    <p className="modal__viewmore" onClick={NavigateProduct}>
                         View More
                     </p>
 

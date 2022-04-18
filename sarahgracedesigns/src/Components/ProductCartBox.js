@@ -12,8 +12,8 @@ export default function ProductCartBox(props) {
     const serialNo = props.serialno;
     const userid = props.userid;
     const productid = props.productid;
+    const email = localStorage.getItem('email');
 
-    
     const updateQuantity = (newQuantity) => {
         let body = {
             userid: userid,
@@ -27,6 +27,14 @@ export default function ProductCartBox(props) {
         }).catch((err) => {
             console.log(err)
         });
+     }
+
+     const RemoveItem = () => {
+        axios.delete(`http://localhost:8080/api/cart/remove/${productid}/${email}`).then((response) => {
+            props.updateTotal();
+        }).catch((err) => {
+            console.log(err)
+        }); 
      }
 
     return (
@@ -45,7 +53,7 @@ export default function ProductCartBox(props) {
                 <p className="cartitem__quantity"> Size: One Size </p>
             </div>
             <div className="cartitem__remove">
-                <FontAwesomeIcon icon={faXmark} className="cartitem__removeicon"></FontAwesomeIcon>
+                <FontAwesomeIcon icon={faXmark} className="cartitem__removeicon" onClick={RemoveItem}></FontAwesomeIcon>
             </div>
         </div>
     )

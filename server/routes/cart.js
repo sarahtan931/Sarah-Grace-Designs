@@ -8,12 +8,12 @@ require('../strategy/passport')(passport);
 // returns all cart items
 router.post("/cart/add", async (req, res) => {
   try {
-    const userId = req.body.userid;
+    let userId = req.body.userid;
     const email = req.body.email;
     const productid = req.body.productid;
 
     const quantity = req.body.quantity;
-    const size = req.body.size;
+    let size = "ONE SIZE";
 
     if (userId == null || userId == 0) {
       //get user id
@@ -56,7 +56,6 @@ router.get('/cart/:email', async (req, res) => {
       res.status(400).send('Cannot find user')
     }
     const userId = userIdQuery.rows[0].id;
-    console.log(userId)
     const cartItems = await pool.query(`SELECT * from cartitem JOIN product ON cartitem.productid = product.id WHERE userid=${userId}`)
     res.json(cartItems.rows)
 

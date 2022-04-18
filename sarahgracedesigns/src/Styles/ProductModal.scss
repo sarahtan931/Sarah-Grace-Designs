@@ -44,6 +44,7 @@
     &__viewmore{
         font-size: 1.2rem;
         text-decoration: underline;
+        cursor: pointer;;
     }
 
     &__button{
@@ -53,6 +54,10 @@
         margin-bottom: 1rem;
         margin-left: 0rem;
         text-align: center;
+    }
+
+    &__button:hover{
+        background-color: #c7d7f7;
     }
 
     &__element{

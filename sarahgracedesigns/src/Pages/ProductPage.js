@@ -5,15 +5,20 @@ import '../Styles/ProductPage.scss';
 import QuantityDropdown from '../Components/QuantityDropdown';
 import ProductMoreInfo from '../Components/ProductMoreInfo';
 import ColorPicker from '../Components/ColorPicker';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../Components/Navbar';
 import NavbarMobile from '../Components/NavbarMobile';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function ProductPage(props) {
     const { id } = useParams()
     const [product, setProduct] = useState([]);
     const [mainImageUrl, setMainImageUrl] = useState("");
     const [quantity, setQuantity] = useState(0);
+    const [openAdd, setOpenAdd] = useState(false);
+    const [openErr, setOpenErr] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -27,10 +32,46 @@ export default function ProductPage(props) {
     }, []);
 
 
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenAdd(false);
+    };
+
+    const action = (
+        <React.Fragment>
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handleClose}
+            >
+                <CloseIcon fontSize="Medium" />
+            </IconButton>
+        </React.Fragment>
+    );
+
+
+    const AddToCart = () => {
+        const email = localStorage.getItem('email');
+        let body = {
+            email: email,
+            productid: id,
+            quantity: quantity,
+        }
+
+        axios.post(`http://localhost:8080/api/cart/add`, body).then((response) => {
+            setOpenAdd(true)
+        }).catch((err) => {
+            setOpenErr(true);
+        });
+    }
+
     const onImageHover = url => () => {
         if (url != undefined && url != null) {
             setMainImageUrl(url)
-    
+
         }
     }
 
@@ -73,15 +114,18 @@ export default function ProductPage(props) {
             )
         }
     }
-  
 
     const updateQuantity = (quantity) => {
         setQuantity(quantity)
-     }
+    }
 
-     const routeToShop = () => {
-         navigate('/shop');
-     }
+    const routeToShop = () => {
+        navigate('/shop');
+    }
+
+    const NavigateCart = () => {
+        navigate('/cart')
+    }
 
     return (
         <div className="product">
@@ -102,7 +146,7 @@ export default function ProductPage(props) {
                         <Image5></Image5>
                     </div>
                     <div className="product__description">
-                        {product.productdesc}
+                        {product?.productdesc}
                     </div>
                 </div>
                 <div className="product__information">
@@ -120,7 +164,7 @@ export default function ProductPage(props) {
                     <div className="custominfo">
                         <div className="custominfo__color">
                             Color
-                           <ColorPicker color={product.color}></ColorPicker>
+                            <ColorPicker color={product.color}></ColorPicker>
                         </div>
                         <div className="custominfo__quantity">
                             Quantity
@@ -130,7 +174,7 @@ export default function ProductPage(props) {
                         </div>
                     </div>
                     <div className="product__buttons">
-                        <div className="product__buttonsstyle product__addtocart">
+                        <div className="product__buttonsstyle product__addtocart" onClick={AddToCart}>
                             Add to Cart
                         </div>
                         <div className="product__buttonsstyle product__buynow">
@@ -140,6 +184,23 @@ export default function ProductPage(props) {
                     <ProductMoreInfo></ProductMoreInfo>
                 </div>
             </div>
+
+            <Snackbar
+                onClick={NavigateCart}
+                open={openAdd}
+                autoHideDuration={6000}
+                onClose={handleClose}
+                message="Succesfully Added Item"
+                action={action}
+            />
+
+            <Snackbar
+                open={openErr}
+                autoHideDuration={6000}
+                onClose={handleClose}
+                message="Error Adding Item"
+                action={action}
+            />
         </div>
     )
 }

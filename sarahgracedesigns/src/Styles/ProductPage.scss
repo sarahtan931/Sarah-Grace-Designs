@@ -77,6 +77,10 @@
         cursor: pointer;
     }
 
+    &__addtocart:hover{
+        background-color: #c7d7f7;
+    }
+
     &__title, &__price{
         font-size: 4rem;
         padding-top: 2.4rem;
@@ -90,6 +94,7 @@
     &__buttons{
         padding-top: 3rem;
     }
+
 }
 
 .custominfo{
