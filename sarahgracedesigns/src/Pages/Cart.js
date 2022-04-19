@@ -5,13 +5,53 @@ import OrderSummary from '../Components/OrderSummary';
 import '../Styles/Cart.scss';
 import ProductCartBox from '../Components/ProductCartBox';
 
-
 export default function Cart() {
     const [products, setProducts] = useState([]);
     const [subtotal, setSubtotal] = useState(0);
     const email = localStorage.getItem('email');
 
+    //when initiating cart, if user authenticated get values from db else get values from local storage
     useEffect(() => {
+        const isAuth = localStorage.getItem('isAuth');
+        if (isAuth) {
+            GetUserCart();
+        } else {
+            GetLocalCart();
+            Products();
+        }
+    }, []);
+
+
+    //helper function to get products from local storage
+    const GetLocalCart = () => {
+        let cartItemString = localStorage.getItem('cartItemIds');
+        let cartItemArr = JSON.parse(cartItemString);
+        let price = 0;
+        let productIdArr = [];
+        if (cartItemArr != null && cartItemArr.length > 0) {
+            cartItemArr.forEach(cartItem => {
+                productIdArr.push(cartItem.productid)
+            })
+
+            let idArr = productIdArr.join(',');
+            axios.get(`http://localhost:8080/api/products/ids/${idArr}`).then((response) => {
+                let productTemp = response.data;
+                productTemp.forEach((product, index) => {
+                    let cartItem = cartItemArr.find(x => x.productid == product.productid);
+                    price += (parseInt(product.price) * cartItem?.quantity);
+                    productTemp[index].cartitemquantity = cartItem.quantity;
+                });
+
+                setProducts([...productTemp]);
+                setSubtotal(price);
+            });
+        }else{
+            setProducts([]);
+        }
+    }
+
+    //helper function to get products from db
+    const GetUserCart = () => {
         axios.get(`http://localhost:8080/api/cart/${email}`).then((response) => {
             const sorted = response.data?.sort((a, b) => a.id - b.id);
             setProducts([...sorted]);
@@ -24,9 +64,10 @@ export default function Cart() {
         }).catch((err) => {
             console.log(err)
         });
-    }, []);
+    }
 
-    const UpdateTotal = () => {
+    //helper function to update products in db
+    const UpdateTotalBackend = () => {
         axios.get(`http://localhost:8080/api/cart/${email}`).then((response) => {
             const sorted = response.data?.sort((a, b) => a.id - b.id);
             setProducts([...sorted]);
@@ -40,7 +81,16 @@ export default function Cart() {
         });
     }
 
+    //if user is authenticated use backend else use local storage
+    const UpdateTotal = () => {
+        const isAuth = localStorage.getItem('isAuth');
+        if (isAuth) {
+            UpdateTotalBackend();
+        } else {
+            GetLocalCart();
+        }
 
+    }
 
     const Products = () => {
         return (
@@ -71,7 +121,7 @@ export default function Cart() {
                         <div className="cart__empty">Empty</div>
                     }
                     <div className="cart__itembox">
-                        <Products></Products>
+                        {products.length > 0 && <Products></Products>}
                     </div>
                     <div className="cart__summarybox">
                         <OrderSummary subtotal={subtotal}></OrderSummary>

@@ -15,7 +15,7 @@ export const Home = (props) => {
   useEffect(() => {
     axios.get(`http://localhost:8080/api/products/category/bestsellers`).then((response) => {
       setBestSellers(response.data);
-      console.log(response.data)
+  
     }).catch((err) => {
       console.log(error)
     });

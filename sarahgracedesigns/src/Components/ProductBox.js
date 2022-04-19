@@ -63,41 +63,74 @@ export default function ProductBox(props) {
     }
 
 
+    //backend functionality to add product to cart
+    const AddToCartBackend = (body) => {
+        axios.post(`http://localhost:8080/api/cart/add`, body).then((response) => {
+            setOpenAdd(true)
+        }).catch((err) => {
+            setOpenErr(true);
+        });
+    }
+
+    //frontend functionality to add product to cart
+    const AddToCartFrontend = (body) => {
+        let cartItemIdsString = localStorage.getItem('cartItemIds');
+        let cartItemIdsArr = []
+        if (cartItemIdsString != null) {
+            cartItemIdsArr = JSON.parse(cartItemIdsString);
+        }
+
+        let found = cartItemIdsArr.find(x => x.productid == body.productid);
+        if (found) {
+            let index = cartItemIdsArr.indexOf(found);
+            cartItemIdsArr[index].quantity = parseInt(body.quantity);
+        } else {
+            cartItemIdsArr.push({ productid: parseInt(body.productid), quantity: parseInt(body.quantity) });
+        }
+        let newCartItemIdsString = JSON.stringify(cartItemIdsArr)
+        localStorage.setItem('cartItemIds', newCartItemIdsString);
+        setOpenAdd(true);
+    }
+
+    //if user is authenticated use backend function
+    //if user is not authenticated store in local storage
     const AddToCart = () => {
-        const email = localStorage.getItem('email');
+        const isAuth = localStorage.getItem('isAuth');
+        const email = localStorage.getItem('email')
         let body = {
             email: email,
             productid: props.id,
             quantity: 1,
         }
 
-        axios.post(`http://localhost:8080/api/cart/add`, body).then((response) => {
-            setOpenAdd(true)
-        }).catch((err) => {
-            setOpenErr(true);
-        });
+        if (isAuth){
+            AddToCartBackend(body);
+        }else{
+            AddToCartFrontend(body);
+        }
     }
 
+    //frontend add to cart for modal
     const AddToCartModal = (id, quantity) => {
-        const email = localStorage.getItem('email');
+        const isAuth = localStorage.getItem('isAuth');
+        const email = localStorage.getItem('email')
         let body = {
             email: email,
             productid: id,
             quantity: quantity,
         }
 
-        axios.post(`http://localhost:8080/api/cart/add`, body).then((response) => {
-            setOpenAdd(true)
-        }).catch((err) => {
-            setOpenErr(true);
-        });
+        if (isAuth){
+            AddToCartBackend(body);
+        }else{
+            AddToCartFrontend(body);
+        }
     }
 
-    
+    //navigate to cart
     const NavigateCart = () => {
         navigate('/cart')
     }
-
 
     return (
         <div className='productbox' >
@@ -123,7 +156,6 @@ export default function ProductBox(props) {
 
                 </div>
             </div>
-
 
             <Modal>
                 <div >

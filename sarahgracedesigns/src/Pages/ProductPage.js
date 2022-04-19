@@ -16,7 +16,7 @@ export default function ProductPage(props) {
     const { id } = useParams()
     const [product, setProduct] = useState([]);
     const [mainImageUrl, setMainImageUrl] = useState("");
-    const [quantity, setQuantity] = useState(0);
+    const [quantity, setQuantity] = useState(1);
     const [openAdd, setOpenAdd] = useState(false);
     const [openErr, setOpenErr] = useState(false);
     const navigate = useNavigate();
@@ -52,20 +52,51 @@ export default function ProductPage(props) {
         </React.Fragment>
     );
 
+    //add item to db cart
+    const AddToCartBackend = (body) => {
+        axios.post(`http://localhost:8080/api/cart/add`, body).then((response) => {
+            setOpenAdd(true)
+        }).catch((err) => {
+            setOpenErr(true);
+        });
+    }
 
+    //add item to local storage cart
+    const AddToCartFrontend = (body) => {
+        let cartItemIdsString = localStorage.getItem('cartItemIds');
+        let cartItemIdsArr = []
+        if (cartItemIdsString != null) {
+            cartItemIdsArr = JSON.parse(cartItemIdsString);
+        }
+
+        let found = cartItemIdsArr.find(x => x.productid == body.productid);
+        if (found) {
+            let index = cartItemIdsArr.indexOf(found);
+            cartItemIdsArr[index].quantity = parseInt(body.quantity);
+        } else {
+            cartItemIdsArr.push({ productid: parseInt(body.productid), quantity: parseInt(body.quantity) });
+        }
+        let newCartItemIdsString = JSON.stringify(cartItemIdsArr)
+        localStorage.setItem('cartItemIds', newCartItemIdsString);
+        setOpenAdd(true);
+    }
+
+   //if user is authenticated add item to db cart else add it to local storage
     const AddToCart = () => {
-        const email = localStorage.getItem('email');
+        const isAuth = localStorage.getItem('isAuth');
+        const email = localStorage.getItem('email')
+
         let body = {
             email: email,
             productid: id,
             quantity: quantity,
         }
 
-        axios.post(`http://localhost:8080/api/cart/add`, body).then((response) => {
-            setOpenAdd(true)
-        }).catch((err) => {
-            setOpenErr(true);
-        });
+        if (isAuth) {
+            AddToCartBackend(body);
+        } else {
+            AddToCartFrontend(body);
+        }
     }
 
     const onImageHover = url => () => {
@@ -116,7 +147,7 @@ export default function ProductPage(props) {
     }
 
     const updateQuantity = (quantity) => {
-        setQuantity(quantity)
+        setQuantity(quantity);
     }
 
     const routeToShop = () => {

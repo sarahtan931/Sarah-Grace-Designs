@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../Styles/Dropdown.scss';
 
 export default function QuantityDropdown(props) {
-  const [selectedValue, setSelectedValue] = useState(0);
+  const [selectedValue, setSelectedValue] = useState(1);
   const [size, setSize] = useState('quantitydropdown');
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export default function QuantityDropdown(props) {
     let array = Array.from(Array(options).keys());
     return (
       array.map((data) => {
-        if (data != 0) {
+        if (data!= 0){
           return (
             <option value={data} key={data}>{data}</option>
           );

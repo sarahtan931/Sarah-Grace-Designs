@@ -23,6 +23,17 @@ router.get("/products/id/:id", async(req, res) => {
     }
   })
 
+//Get product by ids
+router.get("/products/ids/:id", async(req, res) => {
+    try{
+        const allProducts = await pool.query(`SELECT * FROM product LEFT JOIN productimage ON product.id = productimage.productid WHERE product.id IN (${req.params.id}); `);
+        res.json(allProducts.rows)
+    }catch(err){
+        console.error(err.message)
+    }
+  })
+
+
 //Get all products
 router.get("/products", async(req, res) => {
   try{
