@@ -3,6 +3,7 @@ import '../Styles/Login.scss';
 import { faBagShopping, faTruckFast } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
+import ComingSoon from '../Components/ComingSoon';
 
 
 export default function Login() {
@@ -57,6 +58,7 @@ export default function Login() {
               localStorage.setItem('token', data.token);
               localStorage.setItem('email', data.email);
               localStorage.setItem('name', data.name);
+              localStorage.setItem('cartItemIds', [])
               // Routes the logged in user to the proper dashboard based on their catagort in the DB
               navigate('/');
             });

@@ -1,0 +1,23 @@
+.comingsoon{
+    background-color: white;
+    width: 50rem;
+    height: 30rem;
+    background-image: url("https://sarahgracedesignsbucket.s3.amazonaws.com/ComingSoonImage.png");
+    font-size: 2rem;
+    text-align: center;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+
+    &__button{
+        background-color: black;
+        color: white;
+        height: 6rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20rem;
+        border-radius: 5px;
+    }
+}

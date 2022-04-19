@@ -32,7 +32,10 @@ export default function Shop(props) {
 
     if (props.category == null) {
       axios.get(`http://localhost:8080/api/products`).then((response) => {
-        setProducts(response.data);
+        let products = response.data;
+        products.forEach(product => {
+          product['productid'] = product.id})
+        setProducts(products);
       }).catch((err) => {
         console.log(err)
       });
@@ -60,7 +63,7 @@ export default function Shop(props) {
       products.map((data) => {
         return (
           <div key={data.id}>
-            <ProductBox title={data.title} url={data.productimgurl} price={data.price} id={data.id} serialno={data.serialno} quantity={data.quantity} productimgurlhover={data.productimgurlhover} />
+            <ProductBox title={data.title} url={data.productimgurl} price={data.price} id={data.productid} serialno={data.serialno} quantity={data.quantity} productimgurlhover={data.productimgurlhover} />
           </div>
         );
       })

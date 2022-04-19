@@ -80,6 +80,7 @@ export default function Register() {
               localStorage.setItem('isAuth', true);
               localStorage.setItem('token', data.token);
               localStorage.setItem('email', data.email);
+              localStorage.setItem('cartItemIds', []);
               // Routes the logged in user to the proper dashboard based on their catagort in the DB
               navigate('/');
             });

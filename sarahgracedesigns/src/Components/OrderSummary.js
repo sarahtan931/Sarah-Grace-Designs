@@ -23,6 +23,10 @@ export default function OrderSummary(props) {
         return roundedTax;
     }
 
+    function Checkout(e){
+        props.checkout(e);
+    }
+
     return (
         <div className="cart__summary">
             <p className='summary__title'>Order Summary</p>
@@ -43,7 +47,7 @@ export default function OrderSummary(props) {
                     <p>Estimated Total</p>
                     <p>$<GetTotal></GetTotal></p>
                 </div>
-                <div className="summary__button">
+                <div className="summary__button" onClick={(e) => Checkout(e)}>
                     Checkout
                 </div>
             </div>

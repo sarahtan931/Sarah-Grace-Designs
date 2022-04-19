@@ -11,6 +11,8 @@ import NavbarMobile from '../Components/NavbarMobile';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import ComingSoon from '../Components/ComingSoon';
+import { useModal } from 'react-hooks-use-modal';
 
 export default function ProductPage(props) {
     const { id } = useParams()
@@ -20,6 +22,11 @@ export default function ProductPage(props) {
     const [openAdd, setOpenAdd] = useState(false);
     const [openErr, setOpenErr] = useState(false);
     const navigate = useNavigate();
+    const [Modal, openModal, closeModal] = useModal('root', {
+        preventScroll: true,
+        closeOnOverlayClick: true,
+    });
+
 
     useEffect(() => {
         axios.get(`http://localhost:8080/api/products/id/${id}`).then((response) => {
@@ -158,6 +165,17 @@ export default function ProductPage(props) {
         navigate('/cart')
     }
 
+    function ModalOpenHelper(e) {
+        e.stopPropagation();
+        openModal();
+    }
+
+    
+    function ModalCloseHelper() {
+        closeModal()
+    }
+
+
     return (
         <div className="product">
             <Navbar></Navbar>
@@ -208,13 +226,17 @@ export default function ProductPage(props) {
                         <div className="product__buttonsstyle product__addtocart" onClick={AddToCart}>
                             Add to Cart
                         </div>
-                        <div className="product__buttonsstyle product__buynow">
+                        <div className="product__buttonsstyle product__buynow" onClick={(e) => ModalOpenHelper(e)}>
                             Buy Now
                         </div>
                     </div>
                     <ProductMoreInfo></ProductMoreInfo>
                 </div>
             </div>
+
+            <Modal>
+                <ComingSoon closeModal={ModalCloseHelper}></ComingSoon>
+            </Modal>
 
             <Snackbar
                 onClick={NavigateCart}

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark} from '@fortawesome/free-solid-svg-icons';
 import QuantityDropdown from './QuantityDropdown';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function ProductCartBox(props) {
     const [quantity, setQuantity] = useState(props.quantity);
@@ -13,6 +14,7 @@ export default function ProductCartBox(props) {
     const userid = props.userid;
     const productid = props.productid;
     const email = localStorage.getItem('email');
+    const navigate = useNavigate();
 
     //if user is authenticated update quantity in db, if not update local storage quantity
     const updateQuantity = (newQuantity) => {
@@ -98,10 +100,14 @@ export default function ProductCartBox(props) {
         });   
      }
 
+     const NavigateProduct = () => {
+       navigate(`/product/${productid}`)
+     }
+
     return (
         <div className='cartitem'>
             <div className="cartbox">
-                <img src={url} alt="" className="cartbox__img" />
+                <img src={url} alt="" className="cartbox__img" onClick={NavigateProduct}/>
             </div>
             <div>
                 <p className="cartitem__name">Sarah Grace Designs</p>

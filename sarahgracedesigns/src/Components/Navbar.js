@@ -4,11 +4,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import '../Styles/Navbar.scss';
 import { useNavigate } from 'react-router-dom';
+import ComingSoon from '../Components/ComingSoon';
+import { useModal } from 'react-hooks-use-modal';
 
 const Navbar = () => {
     const navigate = useNavigate();
     const [name, setName] = useState("");
     const [show, setShow] = useState(false);
+    const [Modal, openModal, closeModal] = useModal('root', {
+        preventScroll: true,
+        closeOnOverlayClick: true,
+    });
+
 
     useEffect(() => {
         let localName = localStorage.getItem("name");
@@ -62,7 +69,7 @@ const Navbar = () => {
                             <div className="useroptions">
                                 <p className="useroptions__option">Account Information</p>
                                 <p className="useroptions__option">My List</p>
-                                <p className="useroptions__option">My Cart</p>
+                                <p className="useroptions__option" onClick={navigateCart}>My Cart</p>
                                 <div className="logoutbutton" onClick={logout}>
                                     Sign Out
                                 </div>
@@ -73,7 +80,9 @@ const Navbar = () => {
                     <FontAwesomeIcon icon={faCartShopping} className='navbar__icon' onClick={navigateCart}></FontAwesomeIcon>
                 </div>
             </div>
-
+            <Modal>
+                <ComingSoon></ComingSoon>
+            </Modal>
         </div>
     );
 };

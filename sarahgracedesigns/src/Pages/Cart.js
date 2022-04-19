@@ -4,11 +4,20 @@ import Navbar from '../Components/Navbar';
 import OrderSummary from '../Components/OrderSummary';
 import '../Styles/Cart.scss';
 import ProductCartBox from '../Components/ProductCartBox';
+import { useModal } from 'react-hooks-use-modal';
+import ComingSoon from '../Components/ComingSoon';
+
 
 export default function Cart() {
     const [products, setProducts] = useState([]);
     const [subtotal, setSubtotal] = useState(0);
     const email = localStorage.getItem('email');
+    const [Modal, openModal, closeModal] = useModal('root', {
+        preventScroll: true,
+        closeOnOverlayClick: true,
+    });
+
+
 
     //when initiating cart, if user authenticated get values from db else get values from local storage
     useEffect(() => {
@@ -104,6 +113,15 @@ export default function Cart() {
         )
     }
 
+    function ModalOpenHelper(e) {
+        e.stopPropagation();
+        openModal();
+    }
+
+    function ModalCloseHelper() {
+        closeModal()
+    }
+
     return (
         <div>
             <Navbar></Navbar>
@@ -124,10 +142,14 @@ export default function Cart() {
                         {products.length > 0 && <Products></Products>}
                     </div>
                     <div className="cart__summarybox">
-                        <OrderSummary subtotal={subtotal}></OrderSummary>
+                        <OrderSummary subtotal={subtotal} checkout={ModalOpenHelper}></OrderSummary>
                     </div>
                 </div>
             </div>
+
+            <Modal>
+                <ComingSoon closeModal={ModalCloseHelper}></ComingSoon>
+            </Modal>
         </div>
     )
 }
