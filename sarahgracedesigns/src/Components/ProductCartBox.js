@@ -64,7 +64,7 @@ export default function ProductCartBox(props) {
      //helper function to update quantity in db
      const UpdateQuantityBackend = (body) => {
         axios.post(`http://localhost:8080/api/cart/add`, body).then((response) => {
-            setQuantity(newQuantity);
+            setQuantity(quantity);
             props.updateTotal();
         }).catch((err) => {
             console.log(err)

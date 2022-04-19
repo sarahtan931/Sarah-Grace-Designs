@@ -7,8 +7,8 @@ export default function ComingSoon(props) {
     }
     return (
         <div className="comingsoon">
-            <div><strong>Online Orders are Coming Soon!</strong></div>
-            <div>Please Contact Us to place your order</div>
+            <div><strong>Coming Soon!</strong></div>
+            <div>We are working hard to develop this page</div>
             <div onClick={Close} className="comingsoon__button">Got it</div>
         </div>
     )

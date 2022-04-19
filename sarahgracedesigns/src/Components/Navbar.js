@@ -50,6 +50,15 @@ const Navbar = () => {
             setShow(true)
         }
     }
+
+    function ModalOpenHelper(e) {
+        e.stopPropagation();
+        openModal();
+    }
+
+    function ModalCloseHelper() {
+        closeModal()
+    }
     return (
         <div>
             <div className='navbar'>
@@ -67,8 +76,8 @@ const Navbar = () => {
                         </div>
                         {show &&
                             <div className="useroptions">
-                                <p className="useroptions__option">Account Information</p>
-                                <p className="useroptions__option">My List</p>
+                                <p className="useroptions__option"  onClick={(e) => ModalOpenHelper(e)}>Account Information</p>
+                                <p className="useroptions__option" onClick={(e) => ModalOpenHelper(e)}>My List</p>
                                 <p className="useroptions__option" onClick={navigateCart}>My Cart</p>
                                 <div className="logoutbutton" onClick={logout}>
                                     Sign Out
@@ -81,7 +90,7 @@ const Navbar = () => {
                 </div>
             </div>
             <Modal>
-                <ComingSoon></ComingSoon>
+                <ComingSoon  closeModal={ModalCloseHelper}></ComingSoon>
             </Modal>
         </div>
     );

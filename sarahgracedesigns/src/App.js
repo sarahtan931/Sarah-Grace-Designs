@@ -15,9 +15,13 @@ const App = () => (
   <Router>
     <Routes>
       <Route exact path="/" element={<Home></Home>} />
+
       <Route path="/shop" element={<Shop></Shop>} />
-      <Route path="/shop/fashion" element={<Shop category={"fashion"}></Shop>} />
-      <Route path="/shop/home" element={<Shop category={"home"}></Shop>} />
+      <Route path="/shop/fashion" element={<Shop category={"accessories"} title={"Fashion"}></Shop>} />
+      <Route path="/shop/home" element={<Shop category={"home"} title={"Home"}></Shop>} />
+      <Route path="/shop/crochet" element={<Shop category={"crochet"} title={"Crochet"}></Shop>} />
+      <Route path="/shop/beads" element={<Shop category={"beads"} title={"Beads"}></Shop>} />
+      
       <Route path="/product/:id" element={<ProductPage></ProductPage>}></Route>
       <Route path="/login" element={<Login></Login>}></Route>
       <Route path="/register" element={<Register></Register>}></Route>

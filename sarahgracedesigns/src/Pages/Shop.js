@@ -10,20 +10,12 @@ import NavbarMobile from '../Components/NavbarMobile';
 export default function Shop(props) {
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState("All");
+ 
 
   useEffect(() => {
-    if (props.category != null && props.category == "fashion") {
-      setCategory("Fashion");
-      axios.get(`http://localhost:8080/api/products/category/accessories`).then((response) => {
-        setProducts(response.data);
-      }).catch((err) => {
-        console.log(err)
-      });
-    }
-
-    if (props.category != null && props.category == "home") {
-      setCategory("Home Decor");
-      axios.get(`http://localhost:8080/api/products/category/home`).then((response) => {
+    if (props.category != null && props.category != "") {
+      setCategory(props.title);
+      axios.get(`http://localhost:8080/api/products/category/${props.category}`).then((response) => {
         setProducts(response.data);
       }).catch((err) => {
         console.log(err)

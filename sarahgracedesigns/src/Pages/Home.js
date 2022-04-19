@@ -55,7 +55,7 @@ export const Home = (props) => {
         <div className="shopnew__parallax">
           <div className='shopnew__overlay'>
             <p className="shopnew__newcollection">
-              Spring Collection
+              New Collection
             </p>
             <button className="shopnew__shopnow" onClick={navigateShop}>
               <span className="shopnew_buttontext">

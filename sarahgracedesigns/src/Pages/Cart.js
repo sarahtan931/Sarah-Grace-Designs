@@ -68,7 +68,7 @@ export default function Cart() {
             response.data?.forEach(item => {
                 price += (item.cartitemquantity * item.price)
             });
-            setSubtotal(price)
+            setSubtotal(price);
 
         }).catch((err) => {
             console.log(err)
@@ -84,7 +84,7 @@ export default function Cart() {
             response.data?.forEach(item => {
                 price += (item.cartitemquantity * item.price)
             });
-            setSubtotal(price)
+            setSubtotal(price);
         }).catch((err) => {
             console.log(err)
         });
