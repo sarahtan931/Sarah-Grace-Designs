@@ -3,6 +3,7 @@ import '../Styles/Register.scss';
 import { faBagShopping, faTruckFast } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
+import configdata from '../config.json';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -12,7 +13,9 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [errText, setErrText] = useState(" ");
+  const url = configdata.url;
 
+  //helper functions to set input values 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
@@ -33,6 +36,7 @@ export default function Register() {
     setPassword(event.target.value);
   }
 
+  //helper functions to navigate
   const navigateShopping = () => {
     navigate('/shop')
   }
@@ -41,6 +45,7 @@ export default function Register() {
     navigate('/login')
   }
 
+  //helper function to validate data before sending to backend
   const handleSubmit = (event) => {
     event.preventDefault();
     setErrText('');
@@ -60,10 +65,9 @@ export default function Register() {
     }
   };
 
-
-
+  //function to register in db
   const onSubmit = (event) => {
-    fetch(`http://localhost:8080/api/register`, {
+    fetch(`${url}/api/register`, {
       // Creates a post call with the state info
       method: 'POST',
       body: JSON.stringify({ email: email.toLowerCase(), password: password, firstname: firstname, lastname: lastname }),
@@ -100,7 +104,7 @@ export default function Register() {
       </div>
       <div className="register__content">
         <div className="register__imagebox">
-          <img src="https://sarahgracedesignsbucket.s3.amazonaws.com/SarahGraceLogo.png" alt="" className='register__img' />
+          <img src="https://sarahgracedesignsbucket.s3.amazonaws.com/SarahGraceLogo.png" alt="SarahGraceDesignsLogo" className='register__img' />
         </div>
         <div className="login__text">
           <p className="login__instructions">

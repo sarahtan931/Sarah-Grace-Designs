@@ -5,25 +5,28 @@ import ProductBox from '../Components/ProductBox';
 import SortDropdown from '../Components/SortDropdown';
 import Navbar from '../Components/Navbar';
 import NavbarMobile from '../Components/NavbarMobile';
-
+import configdata from '../config.json';
 
 export default function Shop(props) {
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState("All");
+  const url = configdata.url;
  
-
+  //on initial render
   useEffect(() => {
+    //if category is specified search for products by category
     if (props.category != null && props.category != "") {
       setCategory(props.title);
-      axios.get(`http://localhost:8080/api/products/category/${props.category}`).then((response) => {
+      axios.get(`${url}/api/products/category/${props.category}`).then((response) => {
         setProducts(response.data);
       }).catch((err) => {
         console.log(err)
       });
     }
 
+    //if category is not specifed search for all products
     if (props.category == null) {
-      axios.get(`http://localhost:8080/api/products`).then((response) => {
+      axios.get(`${url}/api/products`).then((response) => {
         let products = response.data;
         products.forEach(product => {
           product['productid'] = product.id})
@@ -34,22 +37,23 @@ export default function Shop(props) {
     }
   }, []);
 
+  //function to get products by category and set title
   const getProducts = (category, categorytitle) => () => {
-    var url = `http://localhost:8080/api/products/category/${category}`;
+    var getUrl = `${url}/api/products/category/${category}`;
     setCategory(categorytitle);
 
     if (category == '') {
-      url = `http://localhost:8080/api/products`
+      getUrl = `${url}/api/products`
     }
 
-    axios.get(url).then((response) => {
+    axios.get(getUrl).then((response) => {
       setProducts(response.data);
     }).catch((err) => {
       console.log(err)
     });
   }
 
-
+  //helper function to return a product box for each product
   const Products = () => {
     return (
       products.map((data) => {
@@ -62,6 +66,7 @@ export default function Shop(props) {
     )
   }
 
+  //function to sort products
   const updateSort = (sort) => {
     if (sort == "Low/High") {
       const lowtohigh = products.sort((a, b) => a.price - b.price);

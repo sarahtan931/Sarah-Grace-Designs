@@ -13,6 +13,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import ComingSoon from '../Components/ComingSoon';
 import { useModal } from 'react-hooks-use-modal';
+import configdata from '../config.json';
 
 export default function ProductPage(props) {
     const { id } = useParams()
@@ -26,10 +27,11 @@ export default function ProductPage(props) {
         preventScroll: true,
         closeOnOverlayClick: true,
     });
+    const url = configdata.url;
 
-
+    //on initial render get product images from id
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/products/id/${id}`).then((response) => {
+        axios.get(`${url}/api/products/id/${id}`).then((response) => {
             const res = response.data[0]
             setProduct(res);
             setMainImageUrl(res.productimgurl)
@@ -39,6 +41,7 @@ export default function ProductPage(props) {
     }, []);
 
 
+    //function to close snackbar
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -46,6 +49,7 @@ export default function ProductPage(props) {
         setOpenAdd(false);
     };
 
+    //snackbar action 
     const action = (
         <React.Fragment>
             <IconButton
@@ -61,7 +65,7 @@ export default function ProductPage(props) {
 
     //add item to db cart
     const AddToCartBackend = (body) => {
-        axios.post(`http://localhost:8080/api/cart/add`, body).then((response) => {
+        axios.post(`${url}/api/cart/add`, body).then((response) => {
             setOpenAdd(true)
         }).catch((err) => {
             setOpenErr(true);
@@ -106,6 +110,7 @@ export default function ProductPage(props) {
         }
     }
 
+    //helper function to set main image on hover
     const onImageHover = url => () => {
         if (url != undefined && url != null) {
             setMainImageUrl(url)
@@ -113,10 +118,11 @@ export default function ProductPage(props) {
         }
     }
 
+    //if images exist in db and are sent in render a component for them
     const Image1 = () => {
         if (product.url1 != null && product.url1 != '') {
             return (
-                <img className="product__imagesmall" src={product.url1} onMouseDown={onImageHover(product.url1)} alt=""></img>
+                <img className="product__imagesmall" src={product.url1} onMouseDown={onImageHover(product.url1)} alt="additional product image1"></img>
             )
         }
     }
@@ -124,7 +130,7 @@ export default function ProductPage(props) {
     const Image2 = () => {
         if (product.url2 != null && product.url2 != '') {
             return (
-                <img className="product__imagesmall" src={product.url2} alt="" onMouseDown={onImageHover(product.url2)}></img>
+                <img className="product__imagesmall" src={product.url2} alt="additional product image2" onMouseDown={onImageHover(product.url2)}></img>
             )
         }
     }
@@ -132,7 +138,7 @@ export default function ProductPage(props) {
     const Image3 = () => {
         if (product.url3 != null && product.url3 != '') {
             return (
-                <img className="product__imagesmall" src={product.url3} alt="" onMouseDown={onImageHover(product.url3)}></img>
+                <img className="product__imagesmall" src={product.url3} alt="additional product image3" onMouseDown={onImageHover(product.url3)}></img>
             )
         }
     }
@@ -140,7 +146,7 @@ export default function ProductPage(props) {
     const Image4 = () => {
         if (product.url4 != null && product.url4 != '') {
             return (
-                <img className="product__imagesmall" src={product.url4} alt="" onMouseDown={onImageHover(product.url4)}></img>
+                <img className="product__imagesmall" src={product.url4} alt="additional product image4" onMouseDown={onImageHover(product.url4)}></img>
             )
         }
     }
@@ -148,15 +154,17 @@ export default function ProductPage(props) {
     const Image5 = () => {
         if (product.url5 != null && product.url5 != '') {
             return (
-                <img className="product__imagesmall" src={product.url5} alt="" onMouseDown={onImageHover(product.url5)}></img>
+                <img className="product__imagesmall" src={product.url5} alt="additional product image5" onMouseDown={onImageHover(product.url5)}></img>
             )
         }
     }
 
+    //function to update quantity from dropdown
     const updateQuantity = (quantity) => {
         setQuantity(quantity);
     }
 
+    //helper function to route
     const routeToShop = () => {
         navigate('/shop');
     }
@@ -165,12 +173,13 @@ export default function ProductPage(props) {
         navigate('/cart')
     }
 
+    //helper function to open modal
     function ModalOpenHelper(e) {
         e.stopPropagation();
         openModal();
     }
 
-    
+    //helper function to close modal
     function ModalCloseHelper() {
         closeModal()
     }
@@ -185,7 +194,7 @@ export default function ProductPage(props) {
             </div>
             <div className="product__body">
                 <div className="product__imagegallery">
-                    <img id="mainimage" src={mainImageUrl} className="product__mainimage" alt="" />
+                    <img id="mainimage" src={mainImageUrl} className="product__mainimage" alt="main image of product" />
                     <div className="product__imagegrid">
                         <img className="product__imagesmall" src={product?.productimgurl} alt="" onMouseDown={onImageHover(product?.productimgurl)} ></img>
                         <Image1></Image1>

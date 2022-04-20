@@ -2,22 +2,21 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from '../Components/Navbar';
 import OrderSummary from '../Components/OrderSummary';
-import '../Styles/Cart.scss';
 import ProductCartBox from '../Components/ProductCartBox';
 import { useModal } from 'react-hooks-use-modal';
 import ComingSoon from '../Components/ComingSoon';
-
+import '../Styles/Cart.scss';
+import configdata from '../config.json';
 
 export default function Cart() {
     const [products, setProducts] = useState([]);
     const [subtotal, setSubtotal] = useState(0);
     const email = localStorage.getItem('email');
+    const url = configdata.url;
     const [Modal, openModal, closeModal] = useModal('root', {
         preventScroll: true,
         closeOnOverlayClick: true,
     });
-
-
 
     //when initiating cart, if user authenticated get values from db else get values from local storage
     useEffect(() => {
@@ -43,7 +42,7 @@ export default function Cart() {
             })
 
             let idArr = productIdArr.join(',');
-            axios.get(`http://localhost:8080/api/products/ids/${idArr}`).then((response) => {
+            axios.get(`${url}/api/products/ids/${idArr}`).then((response) => {
                 let productTemp = response.data;
                 productTemp.forEach((product, index) => {
                     let cartItem = cartItemArr.find(x => x.productid == product.productid);
@@ -61,7 +60,7 @@ export default function Cart() {
 
     //helper function to get products from db
     const GetUserCart = () => {
-        axios.get(`http://localhost:8080/api/cart/${email}`).then((response) => {
+        axios.get(`${url}/api/cart/${email}`).then((response) => {
             const sorted = response.data?.sort((a, b) => a.id - b.id);
             setProducts([...sorted]);
             let price = 0;
@@ -77,7 +76,7 @@ export default function Cart() {
 
     //helper function to update products in db
     const UpdateTotalBackend = () => {
-        axios.get(`http://localhost:8080/api/cart/${email}`).then((response) => {
+        axios.get(`${url}/api/cart/${email}`).then((response) => {
             const sorted = response.data?.sort((a, b) => a.id - b.id);
             setProducts([...sorted]);
             let price = 0;
@@ -101,6 +100,7 @@ export default function Cart() {
 
     }
 
+    //function that returns product cart items 
     const Products = () => {
         return (
             products.map((data) => {
@@ -113,11 +113,13 @@ export default function Cart() {
         )
     }
 
+    //function to open the modal
     function ModalOpenHelper(e) {
         e.stopPropagation();
         openModal();
     }
 
+    //function to close modal
     function ModalCloseHelper() {
         closeModal()
     }

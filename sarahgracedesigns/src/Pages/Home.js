@@ -5,15 +5,17 @@ import ProductBox from '../Components/ProductBox';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Navbar from '../Components/Navbar';
 import NavbarMobile from '../Components/NavbarMobile';
-import Footer from '../Components/Footer';
+import configdata from '../config.json';
 
 export const Home = (props) => {
   const [bestSellers, setBestSellers] = useState([]);
   const navigate = useNavigate();
+  const url = configdata.url;
 
-
+  //on initial render
+  //get bestsellers to display on homepage
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/products/category/bestsellers`).then((response) => {
+    axios.get(`${url}/api/products/category/bestsellers`).then((response) => {
       setBestSellers(response.data);
   
     }).catch((err) => {
@@ -21,6 +23,7 @@ export const Home = (props) => {
     });
   }, []);
 
+  //function to return a product box for each bestselling product
   const BestSellers = () => {
     return (
       bestSellers.map((data) => {
@@ -33,6 +36,7 @@ export const Home = (props) => {
     )
   }
 
+  //helper functions to navigate to additional pages
   const navigateShop = () => {
     navigate('/shop')
   }
@@ -44,7 +48,6 @@ export const Home = (props) => {
   const navigateHome = () => {
     navigate('/shop/home');
   }
-
 
   return (
     <div>
@@ -70,13 +73,13 @@ export const Home = (props) => {
       {/*Images to go to the shop page */}
       <div className="shopfromhome">
         <div className="shopfromhome__fashion" onClick={navigateFashion}>
-          <img src="https://sarahgracedesignsbucket.s3.amazonaws.com/PinkBucketHatHome.jpg" alt="" className="shopfromhome__img" />
+          <img src="https://sarahgracedesignsbucket.s3.amazonaws.com/PinkBucketHatHome.jpg" alt="Pink Bucket Hat Photo" className="shopfromhome__img" />
           <div className="shopfromhome__text">
             Fashion
           </div>
         </div>
         <div className="shopfromhome__home" onClick={navigateHome}>
-          <img src="https://sarahgracedesignsbucket.s3.amazonaws.com/CoastersHome.jpg" alt="" className="shopfromhome__img" />
+          <img src="https://sarahgracedesignsbucket.s3.amazonaws.com/CoastersHome.jpg" alt="Coaster Photo" className="shopfromhome__img" />
           <div className="shopfromhome__text">
             Home
           </div>

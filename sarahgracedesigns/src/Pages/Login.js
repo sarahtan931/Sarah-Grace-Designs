@@ -3,29 +3,30 @@ import '../Styles/Login.scss';
 import { faBagShopping, faTruckFast } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
-import ComingSoon from '../Components/ComingSoon';
-
+import configdata from '../config.json';
 
 export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errText, setErrText] = useState(" ");
+  const url = configdata.url;
 
-  const handleEmailChange = (event) => { // setting email input 
+   // setting email input
+  const handleEmailChange = (event) => { 
     setEmail(event.target.value);
   };
 
+  //setting password input 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   }
 
-
+  //validating input before sending to backend
   const handleSubmit = (event) => {
     event.preventDefault();
     setErrText('');
     const reEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    // const rePass = /^(?=.*[a-zA-Z\d]).{5,20}[^\<\\\.\&\%\/\>\*\(\)\+\=\{\}\[\]\:\;\'\"\,]$/;
     if (reEmail.test(email)) {
       onSubmit({ email: email.toLowerCase(), password: password });
     } else {
@@ -38,9 +39,9 @@ export default function Login() {
     }
   };
 
-
+  //calling backend function for use login
   const onSubmit = (event) => {
-    fetch(`http://localhost:8080/api/login`, {
+    fetch(`${url}/api/login`, {
       // Creates a post call with the state info
       method: 'POST',
       body: JSON.stringify({ email: email.toLowerCase(), password: password }),
@@ -59,6 +60,7 @@ export default function Login() {
               localStorage.setItem('email', data.email);
               localStorage.setItem('name', data.name);
               localStorage.setItem('cartItemIds', [])
+
               // Routes the logged in user to the proper dashboard based on their catagort in the DB
               navigate('/');
             });
@@ -71,6 +73,7 @@ export default function Login() {
       })
   };
 
+  //helper functions to navigate
   const navigateShopping = () => {
     navigate('/shop')
   }
@@ -86,7 +89,7 @@ export default function Login() {
       </div>
       <div className="login__content">
         <div className="login__imagebox">
-          <img src="https://sarahgracedesignsbucket.s3.amazonaws.com/SarahGraceLogo.png" alt="" className='login__img' />
+          <img src="https://sarahgracedesignsbucket.s3.amazonaws.com/SarahGraceLogo.png" alt="Sarah Grace Designs Header Image" className='login__img' />
         </div>
         <div className="login__text">
           <p className="login__instructions">
