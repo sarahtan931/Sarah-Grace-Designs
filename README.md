@@ -1,7 +1,7 @@
 # SarahGraceDesigns 
 One good thing about my pandemic boredom is my new found love for crocheting and crafting. This ecommerce website combines my love for crocheting and coding and showcases my favourite personal handmade designs.
 
-![Group 13](https://user-images.githubusercontent.com/60834355/164145369-82db9b9e-476f-427f-8b37-ff9f674c701b.png)
+![Group 13](https://user-images.githubusercontent.com/60834355/164145477-efc5282c-2eb8-4c2e-856f-437a8b203c16.png)
 
 The SarahGraceDesigns site allows users to browse, filter and sort all products. 
 Users are able to view products, add them to their cart and eventually check out items. This site also includes functionality to create an account
