@@ -9,26 +9,29 @@ export default function ProductModal(props) {
     const [quantity, setQuantity] = useState(1);
     const navigate = useNavigate()
 
-
+    //update quantity from quantity dropdown
     const updateQuantity = (quantity) => {
         setQuantity(quantity)
     }
 
+    //function to navigate to view product
     const NavigateProduct = () => {
         navigate(`/product/${props.id}`)
     }
 
+    //function to close modal
     function close() {
         props.callbackModal();
     }
 
+    //add to cart
     function add() {
         props.addToCart(props.id, quantity);
     }
 
     return (
         <div className='modal'>
-            <img src={props.url} alt="" className='modal__img' />
+            <img src={props.url} alt="Product Image" className='modal__img' />
             <div className="modal__information">
                 <div className="modal__element">
                     <div className="modal__exit" onClick={close}>

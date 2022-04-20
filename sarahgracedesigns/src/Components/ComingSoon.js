@@ -2,6 +2,7 @@ import React from 'react';
 import '../Styles/ComingSoon.scss';;
 
 export default function ComingSoon(props) {
+    //helper function to detect when user pressed close button
     const Close = () => {
         props.closeModal();
     }

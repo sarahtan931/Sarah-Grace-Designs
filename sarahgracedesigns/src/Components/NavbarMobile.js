@@ -9,10 +9,12 @@ import {useNavigate} from 'react-router-dom';
 const NavbarMobile = () => {
     const navigate = useNavigate();
 
+    //helper function to open navigation
     const openNav = () => {
         document.getElementById("myNav").style.width = "100%";
     }
 
+    //helper function to close navigation
     const closeNav = link => () => {
         document.getElementById("myNav").style.width = "0%";
         if(link != ''){

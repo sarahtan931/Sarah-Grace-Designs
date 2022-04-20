@@ -14,6 +14,7 @@ export default function SortDropdown(props) {
         )
     }
 
+    //when user chooses sort value, propagate change
     function handleChange(e) {
         setSelectedValue(e.target.value)
         props.update(e.target.value);

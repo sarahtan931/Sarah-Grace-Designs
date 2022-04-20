@@ -16,10 +16,13 @@ const Navbar = () => {
         closeOnOverlayClick: true,
     });
 
-
+    //on initial render get users name
     useEffect(() => {
         let localName = localStorage.getItem("name");
-        setName(localName);
+        let isAuth = localStorage.getItem("isAuth");
+        if (isAuth){
+            setName(localName);
+        }
     }, []);
 
     // Logout 
@@ -31,6 +34,7 @@ const Navbar = () => {
         navigate('/');
     };
 
+    //helper function to navigate
     const navigateLogin = () => {
         navigate('/login')
     }
@@ -43,6 +47,7 @@ const Navbar = () => {
         navigate('/cart');
     }
 
+    //show user options
     const GetUserOptions = (bool) => {
         if (bool == false) {
             setShow(false)
@@ -51,11 +56,13 @@ const Navbar = () => {
         }
     }
 
+    //helper function to open modal
     function ModalOpenHelper(e) {
         e.stopPropagation();
         openModal();
     }
 
+    //helper function to close modal
     function ModalCloseHelper() {
         closeModal()
     }
@@ -63,7 +70,7 @@ const Navbar = () => {
         <div>
             <div className='navbar'>
                 <div className="navbar__logo">
-                    <img className='navbar__logoimg' src="https://sarahgracedesignsbucket.s3.amazonaws.com/SarahGraceLogo.png" alt="" onClick={navigateHome} />
+                    <img className='navbar__logoimg' src="https://sarahgracedesignsbucket.s3.amazonaws.com/SarahGraceLogo.png" alt="Sarah Grace Designs Logo" onClick={navigateHome} />
                 </div>
                 <div className="navbar__links">
                     <Link to='/' className='navbar__list'>Home</Link>

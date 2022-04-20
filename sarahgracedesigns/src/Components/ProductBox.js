@@ -8,7 +8,7 @@ import axios from 'axios';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-
+import configdata from '../config.json';
 
 export default function ProductBox(props) {
     const navigate = useNavigate();
@@ -18,8 +18,9 @@ export default function ProductBox(props) {
         preventScroll: true,
         closeOnOverlayClick: true,
     });
+    const url = configdata.url;
 
-
+    //helper function to close snackbar
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -27,6 +28,7 @@ export default function ProductBox(props) {
         setOpenAdd(false);
     };
 
+    //snackbar action
     const action = (
         <React.Fragment>
             <IconButton
@@ -40,24 +42,28 @@ export default function ProductBox(props) {
         </React.Fragment>
     );
 
-
+    //if user is hovering over image set background to secondary image
     const ImageHover = () => {
         document.getElementById(props.id).src = props.productimgurlhover;
     }
 
+    //if user is not hovering, set image to initial
     const NoImageHover = () => {
         document.getElementById(props.id).src = props.url;
     }
 
+    //helper function to navigate
     const ProductPage = () => {
         navigate(`/product/${props.id}`)
     }
 
+    //helper function to open modal
     function ModalOpenHelper(e) {
         e.stopPropagation();
         openModal();
     }
 
+    //helper function to close modal
     const callbackModal = () => {
         closeModal();
     }
@@ -65,7 +71,7 @@ export default function ProductBox(props) {
 
     //backend functionality to add product to cart
     const AddToCartBackend = (body) => {
-        axios.post(`http://localhost:8080/api/cart/add`, body).then((response) => {
+        axios.post(`${url}/api/cart/add`, body).then((response) => {
             setOpenAdd(true)
         }).catch((err) => {
             setOpenErr(true);
@@ -136,7 +142,7 @@ export default function ProductBox(props) {
         <div className='productbox' >
             <div className="productbox__img" onMouseOver={ImageHover} onMouseLeave={NoImageHover} onClick={ProductPage}>
                 <div className='productbox__imgbox'>
-                    <img src={props.url} alt="" id={props.id} className="productbox__mainimg" />
+                    <img src={props.url} alt="Main image of product" id={props.id} className="productbox__mainimg" />
                 </div>
                 <div className="productbox__view" onClick={(e) => ModalOpenHelper(e)}>
                     <div className="productbox__viewtext">

@@ -16,7 +16,7 @@ export default function QuantityDropdown(props) {
   }, []);
 
 
-
+  //set options to available quantity
   const Options = () => {
     let options = props.quantity + 2;
     if (props.quantity == undefined) {
@@ -35,6 +35,7 @@ export default function QuantityDropdown(props) {
     )
   }
 
+  //when user updates dropdown value, propagate change
   function handleChange(e) {
     setSelectedValue(e.target.value)
     props.update(e.target.value);

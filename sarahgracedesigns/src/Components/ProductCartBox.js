@@ -4,16 +4,18 @@ import { faXmark} from '@fortawesome/free-solid-svg-icons';
 import QuantityDropdown from './QuantityDropdown';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import configdata from '../config.json';
 
 export default function ProductCartBox(props) {
     const [quantity, setQuantity] = useState(props.quantity);
     const title = props.title;
-    const url = props.url;
+    const imageurl = props.url;
     const price = props.price;
     const serialNo = props.serialno;
     const userid = props.userid;
     const productid = props.productid;
     const email = localStorage.getItem('email');
+    const url = configdata.url;
     const navigate = useNavigate();
 
     //if user is authenticated update quantity in db, if not update local storage quantity
@@ -63,7 +65,7 @@ export default function ProductCartBox(props) {
 
      //helper function to update quantity in db
      const UpdateQuantityBackend = (body) => {
-        axios.post(`http://localhost:8080/api/cart/add`, body).then((response) => {
+        axios.post(`${url}/api/cart/add`, body).then((response) => {
             setQuantity(quantity);
             props.updateTotal();
         }).catch((err) => {
@@ -93,13 +95,14 @@ export default function ProductCartBox(props) {
 
      //helper function to remove item in db
      const RemoveItemBackend = () => {
-        axios.delete(`http://localhost:8080/api/cart/remove/${productid}/${email}`).then((response) => {
+        axios.delete(`${url}/api/cart/remove/${productid}/${email}`).then((response) => {
             props.updateTotal();
         }).catch((err) => {
             console.log(err)
         });   
      }
 
+     //helper function to navigate
      const NavigateProduct = () => {
        navigate(`/product/${productid}`)
      }
@@ -107,7 +110,7 @@ export default function ProductCartBox(props) {
     return (
         <div className='cartitem'>
             <div className="cartbox">
-                <img src={url} alt="" className="cartbox__img" onClick={NavigateProduct}/>
+                <img src={imageurl} alt="Product Image" className="cartbox__img" onClick={NavigateProduct}/>
             </div>
             <div>
                 <p className="cartitem__name">Sarah Grace Designs</p>

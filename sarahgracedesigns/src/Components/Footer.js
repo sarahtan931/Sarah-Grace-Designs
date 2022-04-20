@@ -10,12 +10,13 @@ export const Footer = () => {
         closeOnOverlayClick: true,
     });
 
-    
+    //helper functions to open coming soon modal
     function ModalOpenHelper(e) {
         e.stopPropagation();
         openModal();
     }
 
+    //helper functions to close coming soon modal
     function ModalCloseHelper() {
         closeModal()
     }

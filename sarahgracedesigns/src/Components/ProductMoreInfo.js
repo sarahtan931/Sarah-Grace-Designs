@@ -10,6 +10,7 @@ export default function ProductMoreInfo() {
     const [stateProduct, setStateProduct] = useState(closed);
     const [stateReturn, setStateReturn] = useState(closed)
 
+    //function to set only one info open at a time
     const handleOpen = (ship, product, exchanged) => () => {
         if (stateShipping == open) {
             ship = closed;
@@ -24,7 +25,6 @@ export default function ProductMoreInfo() {
         setStateProduct(product);
         setStateReturn(exchanged)
     }
-
 
     return (
         <div className='moreinfo'>

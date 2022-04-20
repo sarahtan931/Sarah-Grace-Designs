@@ -3,12 +3,14 @@ import '../Styles/Cart.scss';
 
 export default function OrderSummary(props) {
     
+    //function to calculate total price
     const GetTotal = () => {
         let total = (props.subtotal * 1.13) + 12;
         let roundedTotal = Math.round(total * 100)/ 100;
         return roundedTotal;
     }
 
+    //function to calculate shipping price
     const GetShipping = () => {
         if (props.subtotal > 0){
             return 12;
@@ -17,12 +19,14 @@ export default function OrderSummary(props) {
         }
     }
 
+    //function to calculate taz
     const GetTax = () => {
         let tax = props.subtotal * .13;
         let roundedTax = Math.round(tax * 100)/ 100;
         return roundedTax;
     }
 
+    //function to handle checkout
     function Checkout(e){
         props.checkout(e);
     }
