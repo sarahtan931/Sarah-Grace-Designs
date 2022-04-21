@@ -9,6 +9,7 @@ import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import configdata from '../config.json';
+import { useMediaQuery } from 'react-responsive';
 
 export default function ProductBox(props) {
     const navigate = useNavigate();
@@ -18,6 +19,7 @@ export default function ProductBox(props) {
         preventScroll: true,
         closeOnOverlayClick: true,
     });
+    const isMobile = useMediaQuery({ query: `(max-width: 640px)` });
     const url = configdata.url;
 
     //helper function to close snackbar
@@ -147,11 +149,11 @@ export default function ProductBox(props) {
                 <div className='productbox__imgbox'>
                     <img src={props.url} alt="Main image of product" id={props.id} className="productbox__mainimg" />
                 </div>
-                <div className="productbox__view" onClick={(e) => ModalOpenHelper(e)}>
+                {!isMobile && <div className="productbox__view" onClick={(e) => ModalOpenHelper(e)}>
                     <div className="productbox__viewtext">
                         Quick View
                     </div>
-                </div>
+                </div>}
             </div>
             <div className='productbox__info'>
                 <p className='productbox__title'>

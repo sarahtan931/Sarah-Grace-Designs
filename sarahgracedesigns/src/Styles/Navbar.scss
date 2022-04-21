@@ -150,6 +150,7 @@
   @media only screen and (max-width: $bp-mobile) {
     display: block;
     height: 5rem;
+    margin-bottom: 1rem;
 }
 }
 
@@ -198,4 +199,8 @@
 
 .usernamebox{
   padding-right: 1rem;
+}
+
+.bars{
+  padding: .5rem;
 }

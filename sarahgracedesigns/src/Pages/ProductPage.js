@@ -14,6 +14,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import ComingSoon from '../Components/ComingSoon';
 import { useModal } from 'react-hooks-use-modal';
 import configdata from '../config.json';
+import { useMediaQuery } from 'react-responsive';
 
 export default function ProductPage(props) {
     const { id } = useParams()
@@ -24,6 +25,7 @@ export default function ProductPage(props) {
     const [openAdd, setOpenAdd] = useState(false);
     const [openErr, setOpenErr] = useState(false);
     const navigate = useNavigate();
+    const isMobile = useMediaQuery({ query: `(max-width: 650px)` });
     const [Modal, openModal, closeModal] = useModal('root', {
         preventScroll: true,
         closeOnOverlayClick: true,
@@ -208,9 +210,9 @@ export default function ProductPage(props) {
                         <Image4></Image4>
                         <Image5></Image5>
                     </div>
-                    <div className="product__description">
+                   {!isMobile && <div className="product__description">
                         {product?.productdesc}
-                    </div>
+                    </div>}
                 </div>
                 <div className="product__information">
                     <div className="product__titleinfo">
@@ -244,6 +246,9 @@ export default function ProductPage(props) {
                         <button className="product__buttonsstyle product__buynow" onClick={(e) => ModalOpenHelper(e)}>
                             Buy Now
                         </button>
+                        {isMobile && <div className="product__description">
+                        {product?.productdesc}
+                    </div>}
                     </div>
                     <ProductMoreInfo product={product}></ProductMoreInfo>
                 </div>
