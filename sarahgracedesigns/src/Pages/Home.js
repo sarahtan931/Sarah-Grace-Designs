@@ -7,7 +7,7 @@ import Navbar from '../Components/Navbar';
 import NavbarMobile from '../Components/NavbarMobile';
 import configdata from '../config.json';
 
-export const Home = (props) => {
+export const Home = () => {
   const [bestSellers, setBestSellers] = useState([]);
   const navigate = useNavigate();
   const url = configdata.url;
