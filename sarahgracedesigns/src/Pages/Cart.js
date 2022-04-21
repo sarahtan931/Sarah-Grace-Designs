@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from '../Components/Navbar';
+import NavbarMobile from '../Components/NavbarMobile';
 import OrderSummary from '../Components/OrderSummary';
 import ProductCartBox from '../Components/ProductCartBox';
 import { useModal } from 'react-hooks-use-modal';
@@ -127,6 +128,7 @@ export default function Cart() {
     return (
         <div>
             <Navbar></Navbar>
+            <NavbarMobile></NavbarMobile>
             <div className="cart">
                 <div className="cart__header">
                     <p className='cart__slogan'>

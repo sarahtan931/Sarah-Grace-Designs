@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark} from '@fortawesome/free-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import QuantityDropdown from './QuantityDropdown';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -25,28 +25,28 @@ export default function ProductCartBox(props) {
             productid: productid,
             quantity: parseInt(newQuantity),
         }
-        
+
         const isAuth = localStorage.getItem('isAuth');
         if (isAuth) {
             UpdateQuantityBackend(body);
         } else {
             UpdateQuantityFrontend(body)
-          
-        }
-     }
 
-     //if user is authenticated removed item in db, if not update local storage
-     const RemoveItem = () => {
+        }
+    }
+
+    //if user is authenticated removed item in db, if not update local storage
+    const RemoveItem = () => {
         const isAuth = localStorage.getItem('isAuth');
         if (isAuth) {
             RemoveItemBackend();
         } else {
             RemoveItemFrontend();
         }
-     }
+    }
 
-     //helper function to find and update quantity of product in local storage
-     const UpdateQuantityFrontend = (body) => {
+    //helper function to find and update quantity of product in local storage
+    const UpdateQuantityFrontend = (body) => {
         let cartItemIdsString = localStorage.getItem('cartItemIds');
         let cartItemIdsArr = []
         if (cartItemIdsString != null) {
@@ -57,24 +57,24 @@ export default function ProductCartBox(props) {
         if (found) {
             let index = cartItemIdsArr.indexOf(found);
             cartItemIdsArr[index].quantity = parseInt(body.quantity);
-        } 
+        }
         let newCartItemIdsString = JSON.stringify(cartItemIdsArr);
         localStorage.setItem('cartItemIds', newCartItemIdsString);
         props.updateTotal();
-     }
+    }
 
-     //helper function to update quantity in db
-     const UpdateQuantityBackend = (body) => {
+    //helper function to update quantity in db
+    const UpdateQuantityBackend = (body) => {
         axios.post(`${url}/api/cart/add`, body).then((response) => {
             setQuantity(quantity);
             props.updateTotal();
         }).catch((err) => {
             console.log(err)
         });
-     }
+    }
 
-     //helper function to remove item in local storage
-     const RemoveItemFrontend = () => {
+    //helper function to remove item in local storage
+    const RemoveItemFrontend = () => {
         let cartItemIdsString = localStorage.getItem('cartItemIds');
         let cartItemIdsArr = []
         if (cartItemIdsString != null) {
@@ -84,41 +84,49 @@ export default function ProductCartBox(props) {
         let found = cartItemIdsArr.find(x => x.productid == productid);
         if (found) {
             let index = cartItemIdsArr.indexOf(found);
-            if (index > -1){
+            if (index > -1) {
                 cartItemIdsArr.splice(index, 1)
             }
-        } 
+        }
         let newCartItemIdsString = JSON.stringify(cartItemIdsArr);
-        localStorage.setItem('cartItemIds', newCartItemIdsString);  
+        localStorage.setItem('cartItemIds', newCartItemIdsString);
         props.updateTotal();
-     }
+    }
 
-     //helper function to remove item in db
-     const RemoveItemBackend = () => {
+    //helper function to remove item in db
+    const RemoveItemBackend = () => {
         axios.delete(`${url}/api/cart/remove/${productid}/${email}`).then((response) => {
             props.updateTotal();
         }).catch((err) => {
             console.log(err)
-        });   
-     }
+        });
+    }
 
-     //helper function to navigate
-     const NavigateProduct = () => {
-       navigate(`/product/${productid}`)
-     }
+    //helper function to navigate
+    const NavigateProduct = () => {
+        navigate(`/product/${productid}`)
+    }
 
     return (
         <div className='cartitem'>
             <div className="cartbox">
-                <img src={imageurl} alt="Product Image" className="cartbox__img" onClick={NavigateProduct}/>
+                <img src={imageurl} alt="Product Image" className="cartbox__img" onClick={NavigateProduct} />
             </div>
-            <div>
+            <div className='cartbox2'>
                 <p className="cartitem__name">Sarah Grace Designs</p>
                 <p className="cartitem__title">{title}</p>
                 <p className="cartitem__price">${price}</p>
+
+                <div className="mobilecartitem">
+                    <div className="cartitem__quantity"> Quantity: <QuantityDropdown size="small" initial={quantity} update={updateQuantity}></QuantityDropdown>  </div>
+                    <p className="cartitem__quantity"> Size: One Size </p>
+
+                </div>
+
                 <p className="cartitem__serial">{serialNo}</p>
+
             </div>
-            <div>
+            <div className='cartbox3'>
                 <div className="cartitem__quantity"> Quantity: <QuantityDropdown size="small" initial={quantity} update={updateQuantity}></QuantityDropdown>  </div>
                 <p className="cartitem__quantity"> Size: One Size </p>
             </div>
