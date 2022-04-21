@@ -22,7 +22,7 @@
     &__imagegrid{
         padding-top: 1rem;
         display: grid;
-        grid-template-columns: repeat(5,1fr);
+        grid-template-columns: repeat(6,1fr);
         grid-column-gap: 1rem;
         grid-row-gap: 1rem;
     }
@@ -56,6 +56,8 @@
     }
 
     &__buttonsstyle{
+        font-size: 2rem;
+        background-color: white;
         width: 36rem;
         height: 5rem;
         margin: auto;
@@ -71,14 +73,14 @@
         cursor: pointer;
     }
 
+    &__addtocart:hover:enabled{
+        background-color: #c7d7f7;
+    }
+
     &__buynow{
         background-color: black;
         color: white;
         cursor: pointer;
-    }
-
-    &__addtocart:hover{
-        background-color: #c7d7f7;
     }
 
     &__title, &__price{
@@ -110,6 +112,7 @@
         border-radius: 10rem;
         margin: 1rem; 
         display: inline-block;
+        box-shadow: 0px 0px 5px rgb(222, 222, 222);
     }
 
     &__quantity{
@@ -138,7 +141,7 @@
     }
 
     &__open{
-        font-size: 1.6rem;
+        font-size: 1.4rem;
         padding-bottom: 2rem;
         transition: all .5s;
     }
@@ -150,4 +153,9 @@
     &__icon{
         font-size: 1.5rem;
     }
+}
+
+.outofstock{
+    font-size: 1rem;
+    padding-top: 1rem;
 }

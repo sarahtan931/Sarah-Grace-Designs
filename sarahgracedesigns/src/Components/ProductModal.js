@@ -7,7 +7,8 @@ import { useNavigate } from 'react-router-dom';
 
 export default function ProductModal(props) {
     const [quantity, setQuantity] = useState(1);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const [outOfStock, setOutOfStock] = useState(false);
 
     //update quantity from quantity dropdown
     const updateQuantity = (quantity) => {
@@ -27,6 +28,16 @@ export default function ProductModal(props) {
     //add to cart
     function add() {
         props.addToCart(props.id, quantity);
+    }
+
+    function GetQuantity() {
+        if (props.quantity > 0) {
+            return (<QuantityDropdown quantity={props.quantity} update={updateQuantity}></QuantityDropdown>
+            )
+        }else{
+            setOutOfStock(true)
+            return( <p className='outofstock'>  This item is currently out of stock.</p>)
+        }
     }
 
     return (
@@ -50,13 +61,13 @@ export default function ProductModal(props) {
                 <div className="modal__quantity modal__element">
                     <div className="">
                         Quantity
-                        <QuantityDropdown quantity={props.quantity} update={updateQuantity}></QuantityDropdown>
+                        <GetQuantity></GetQuantity>
                     </div>
                 </div>
                 <div className="modal__element">
-                    <div className="modal__button" onClick={add}>
+                    <button className="modal__button" onClick={add} disabled={outOfStock}>
                         Add to Cart
-                    </div>
+                    </button>
                     <p className="modal__viewmore" onClick={NavigateProduct}>
                         View More
                     </p>

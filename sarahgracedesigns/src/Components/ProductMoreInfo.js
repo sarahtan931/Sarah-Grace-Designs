@@ -3,7 +3,7 @@ import '../Styles/ProductPage.scss';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default function ProductMoreInfo() {
+export default function ProductMoreInfo(props) {
     const closed = "moreinfo__closed";
     const open = "moreinfo__open";
     const [stateShipping, setStateShipping] = useState(open);
@@ -34,7 +34,12 @@ export default function ProductMoreInfo() {
                 </div>
             </div>
             <div className={stateShipping}>
-                This is some shipping information
+                All products are handmade just for you, so please allow 2-4 weeks for your order to be processed and shipped.
+                Once your order has been shipped you will receive an email with tracking information
+                and expected delivery date.
+                <br></br> <br></br>
+                <em>  If you need any assistance dont hesitate to reach out to us at 
+                sarah.tan931@gmail.com</em>
             </div>
 
             <div className='moreinfo__accordian' onClick={handleOpen(closed, open, closed)}>Product Information
@@ -43,7 +48,11 @@ export default function ProductMoreInfo() {
                 </div>
             </div>
             <div className={stateProduct}>
-                This is some product information
+                <ul>
+                    <li> Content: {props.product.infocontent}</li>
+                    <li> Wash: {props.product.infowash}</li>
+                    <li> Size: {props.product.infosize}</li>
+                </ul>
             </div>
 
             <div className='moreinfo__accordian' onClick={handleOpen(closed, closed, open)}>Returns and Exchanges
@@ -52,7 +61,10 @@ export default function ProductMoreInfo() {
                 </div>
             </div>
             <div className={stateReturn}>
-                This is some returns and exchanges information
+                Unfortunately at this time we do not accept returns or exchanges. 
+                <br></br> <br></br>
+                <em>  In the case of a 
+                damaged product please email us at sarah.tan931@gmail.com</em>
             </div>
         </div>
     )

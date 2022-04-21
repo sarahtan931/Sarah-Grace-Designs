@@ -8,6 +8,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    border: none;
 
     &__text{
         color: white;
@@ -15,7 +16,11 @@
     }
 }
 
-.blackbutton:hover{
+.blackbutton:disabled{
+    background-color: darkgrey;
+}
+
+.blackbutton:hover:enabled{
     background-color: #99BCFE;
    
 }

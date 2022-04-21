@@ -18,6 +18,7 @@ import configdata from '../config.json';
 export default function ProductPage(props) {
     const { id } = useParams()
     const [product, setProduct] = useState([]);
+    const [outOfStock, setOutOfStock] = useState(false);
     const [mainImageUrl, setMainImageUrl] = useState("");
     const [quantity, setQuantity] = useState(1);
     const [openAdd, setOpenAdd] = useState(false);
@@ -34,7 +35,10 @@ export default function ProductPage(props) {
         axios.get(`${url}/api/products/id/${id}`).then((response) => {
             const res = response.data[0]
             setProduct(res);
-            setMainImageUrl(res.productimgurl)
+            setMainImageUrl(res.productimgurl);
+            if (res.quantity == 0){
+                setOutOfStock(true);
+            }
         }).catch((err) => {
             console.log(err)
         });
@@ -47,6 +51,7 @@ export default function ProductPage(props) {
             return;
         }
         setOpenAdd(false);
+        setOpenErr(false);
     };
 
     //snackbar action 
@@ -92,7 +97,7 @@ export default function ProductPage(props) {
         setOpenAdd(true);
     }
 
-   //if user is authenticated add item to db cart else add it to local storage
+    //if user is authenticated add item to db cart else add it to local storage
     const AddToCart = () => {
         const isAuth = localStorage.getItem('isAuth');
         const email = localStorage.getItem('email')
@@ -227,19 +232,20 @@ export default function ProductPage(props) {
                         <div className="custominfo__quantity">
                             Quantity
                             <div>
-                                <QuantityDropdown quantity={product.quantity} update={updateQuantity} ></QuantityDropdown>
+                                {!outOfStock && <QuantityDropdown quantity={product.quantity} update={updateQuantity} ></QuantityDropdown>}
+                                {outOfStock && <p className='outofstock'>  This item is currently out of stock.</p>}
                             </div>
                         </div>
                     </div>
                     <div className="product__buttons">
-                        <div className="product__buttonsstyle product__addtocart" onClick={AddToCart}>
+                        <button disabled={outOfStock} className="product__buttonsstyle product__addtocart" onClick={AddToCart}>
                             Add to Cart
-                        </div>
-                        <div className="product__buttonsstyle product__buynow" onClick={(e) => ModalOpenHelper(e)}>
+                        </button>
+                        <button className="product__buttonsstyle product__buynow" onClick={(e) => ModalOpenHelper(e)}>
                             Buy Now
-                        </div>
+                        </button>
                     </div>
-                    <ProductMoreInfo></ProductMoreInfo>
+                    <ProductMoreInfo product={product}></ProductMoreInfo>
                 </div>
             </div>
 

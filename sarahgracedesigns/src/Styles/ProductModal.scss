@@ -1,18 +1,18 @@
-.modal{
+.modal {
     background-color: white;
     display: flex;
     font-size: 2rem;
-    margin:2rem;
+    margin: 2rem;
     width: 78rem;
-  
-    &__information{
+
+    &__information {
         display: flex;
         flex-direction: column;
         padding-left: 2rem;
         width: 50%;
     }
 
-    &__exit{
+    &__exit {
         position: absolute;
         top: 0%;
         right: 0%;
@@ -20,48 +20,51 @@
         margin-right: 4rem;
     }
 
-    img{
+    img {
         width: 50%;
     }
 
-    &__title{
+    &__title {
         font-size: 3rem;
     }
 
-    &__serialno{
+    &__serialno {
         font-size: 1.2rem;
         padding-bottom: 2rem;
     }
 
-    &__price{
+    &__price {
         font-size: 3rem;
     }
 
-    &__quantity{
+    &__quantity {
         font-size: 1.6rem;
     }
 
-    &__viewmore{
+    &__viewmore {
         font-size: 1.2rem;
         text-decoration: underline;
-        cursor: pointer;;
+        cursor: pointer;
+        ;
     }
 
-    &__button{
+    &__button {
         border: 1px solid black;
-        padding: 1rem;
-        margin: 2rem;
+        padding: 1.5rem;
+        width: 85%;
         margin-bottom: 1rem;
         margin-left: 0rem;
         text-align: center;
+        background-color: white;
+        font-size: 1.8rem;
     }
 
-    &__button:hover{
+    &__button:hover:enabled {
         background-color: #c7d7f7;
     }
 
-    &__element{
-        padding-top: 4.6rem;
-       
+    &__element {
+        padding-top: 4rem;
+
     }
 }

@@ -101,6 +101,9 @@ export default function ProductBox(props) {
     //if user is authenticated use backend function
     //if user is not authenticated store in local storage
     const AddToCart = () => {
+        if (props.quantity == 0){
+            return;
+        }
         const isAuth = localStorage.getItem('isAuth');
         const email = localStorage.getItem('email')
         let body = {
@@ -158,8 +161,8 @@ export default function ProductBox(props) {
                     ${props.price}
                 </div>
                 <div className="productbox__button"  onClick={AddToCart}>
-                    <BlackButton text={'Add to Cart'}></BlackButton>
-
+                    {props.quantity == 0 &&  <BlackButton text={'Add to Cart'} disabled={true}></BlackButton>}
+                    {props.quantity > 0 && <BlackButton text={'Add to Cart'} disabled={false}></BlackButton>}
                 </div>
             </div>
 

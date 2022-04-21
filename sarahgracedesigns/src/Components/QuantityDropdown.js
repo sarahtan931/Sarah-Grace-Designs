@@ -18,21 +18,24 @@ export default function QuantityDropdown(props) {
 
   //set options to available quantity
   const Options = () => {
-    let options = props.quantity + 2;
+    let options = Math.min(5, props.quantity + 1);
     if (props.quantity == undefined) {
       options = 10;
     }
-
-    let array = Array.from(Array(options).keys());
-    return (
-      array.map((data) => {
-        if (data!= 0){
-          return (
-            <option value={data} key={data}>{data}</option>
-          );
-        }
-      })
-    )
+    
+    
+    if (options > 0){
+      let array = Array.from(Array(options).keys());
+      return (
+        array.map((data) => {
+          if (data!= 0){
+            return (
+              <option value={data} key={data}>{data}</option>
+            );
+          }
+        })
+      )
+    }
   }
 
   //when user updates dropdown value, propagate change
