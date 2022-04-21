@@ -22,6 +22,19 @@ Figma Link: https://www.figma.com/file/6Fcnx1BsJukpsPZJzORcks/Sarah-Grace-Design
 <li> Sass </li>
 <li> Stripe (Coming Soon)</li>
 
+## Functionalities
+* View/Sort/Filter Products
+* Register Account 
+* Login
+* View/Add/Edit Cart (authenticated and non authenticated users)
+
+### Functionalities Coming Soon
+* Checkout 
+* View Past Orders
+* View Wishlist
+* Edit old products
+* Post new products
+
 ## Installation 
 Coming Soon
 
