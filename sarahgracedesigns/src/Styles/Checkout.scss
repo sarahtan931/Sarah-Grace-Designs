@@ -1,0 +1,24 @@
+.checkout{
+    display: flex;
+
+    &__info{
+        margin: 2rem;
+        background-color: #F3F5F6;
+        flex-basis: 60%;
+        height: 60rem;
+    }
+
+    &__review{
+        background-color: #F3F5F6;
+        flex-basis: 40%;
+        margin: 2rem;
+    }
+
+    &__cardbox{
+        width: 70rem;
+        height: 8rem;
+        background-color: #99BCFE;
+    
+    }
+   
+}

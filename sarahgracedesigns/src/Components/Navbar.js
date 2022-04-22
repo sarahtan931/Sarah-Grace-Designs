@@ -20,7 +20,7 @@ const Navbar = () => {
     useEffect(() => {
         let localName = localStorage.getItem("name");
         let isAuth = localStorage.getItem("isAuth");
-        if (isAuth){
+        if (isAuth) {
             setName(localName);
         }
     }, []);
@@ -77,13 +77,15 @@ const Navbar = () => {
                     <Link to='/shop' className='navbar__list'>Shop</Link>
                 </div>
                 <div className="navbar__icons">
+                    <FontAwesomeIcon icon={faUser} onClick={navigateLogin}></FontAwesomeIcon>
+                    <FontAwesomeIcon icon={faCartShopping} className='navbar__icon' onClick={navigateCart}></FontAwesomeIcon>
                     <div className="usernamebox" onMouseDown={() => GetUserOptions(true)} onMouseOver={() => GetUserOptions(true)} onMouseLeave={() => GetUserOptions(false)}>
                         <div className='username' >
                             {name}
                         </div>
                         {show &&
-                            <div className="useroptions">
-                                <p className="useroptions__option"  onClick={(e) => ModalOpenHelper(e)}>Account Information</p>
+                            <div className="useroptions" >
+                                <p className="useroptions__option" onClick={(e) => ModalOpenHelper(e)}>Account Information</p>
                                 <p className="useroptions__option" onClick={(e) => ModalOpenHelper(e)}>My List</p>
                                 <p className="useroptions__option" onClick={navigateCart}>My Cart</p>
                                 <div className="logoutbutton" onClick={logout}>
@@ -92,12 +94,11 @@ const Navbar = () => {
                             </div>
                         }
                     </div>
-                    <FontAwesomeIcon icon={faUser} onClick={navigateLogin}></FontAwesomeIcon>
-                    <FontAwesomeIcon icon={faCartShopping} className='navbar__icon' onClick={navigateCart}></FontAwesomeIcon>
                 </div>
             </div>
+
             <Modal>
-                <ComingSoon  closeModal={ModalCloseHelper}></ComingSoon>
+                <ComingSoon closeModal={ModalCloseHelper}></ComingSoon>
             </Modal>
         </div>
     );

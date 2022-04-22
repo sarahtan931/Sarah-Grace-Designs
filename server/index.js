@@ -26,6 +26,9 @@ app.use('/api/', userRoute);
 const cartRoute = require('./routes/cart');
 app.use('/api/', cartRoute);
 
+//const checkoutRoute = require('./routes/checkout');
+//app.use('/api/', checkoutRoute);
+
 app.listen(8080, () => {
     console.log("server has started on port 8080")
 })
