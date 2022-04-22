@@ -6,11 +6,21 @@ import SortDropdown from '../Components/SortDropdown';
 import Navbar from '../Components/Navbar';
 import NavbarMobile from '../Components/NavbarMobile';
 import configdata from '../config.json';
+import BrowseDropdown from '../Components/BrowseDropdown';
 
 export default function Shop(props) {
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState("All");
   const url = configdata.url;
+  const dict = {
+    "All": undefined,
+    "New": "new",
+    "Best Sellers": "bestsellers",
+    "Home": "home", 
+    "Accessories": "accessories",
+    "Crochet": "crochet",
+    "Beads": "beads"
+  }
  
   //on initial render
   useEffect(() => {
@@ -77,14 +87,35 @@ export default function Shop(props) {
     }
   }
 
+  const updateFilter = (filter) => {
+    console.log('getting with', dict[filter], filter)
+    const filterEndpoint = dict[filter];
+    getProducts(filterEndpoint, filter);
+
+    var getUrl = `${url}/api/products/category/${filterEndpoint}`;
+    setCategory(filter);
+
+    if (filterEndpoint == undefined) {
+      getUrl = `${url}/api/products`
+    }
+
+    axios.get(getUrl).then((response) => {
+      setProducts(response.data);
+    }).catch((err) => {
+      console.log(err)
+    });
+  }
 
   return (
     <div className='shop'>
       <Navbar></Navbar>
       <NavbarMobile></NavbarMobile>
       <div className="shop__logo"> Handmade Designs - Made With Love</div>
+      <div className="shop__mobiletitle">{category}</div>
       <div className="shop__header">
-        <div className='shop__headertitle'>Browse By</div>
+        <div className='shop__headertitle'>Browse By
+         <BrowseDropdown update={updateFilter}></BrowseDropdown>
+        </div>
         <div className='shop__headertitle shop__headertitlemiddle'>{category}</div>
         <div className='shop__headertitle shop__headertitleright'>Sort
           <SortDropdown update={updateSort}></SortDropdown>

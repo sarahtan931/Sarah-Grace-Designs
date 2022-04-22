@@ -26,11 +26,30 @@
         font-weight: bold;
         padding-left: 2rem;
         padding-right: 2rem;
+        @media only screen and (max-width: $bp-md) {
+            flex-grow: 0;
+        }
+    }
+
+    &__mobiletitle{
+        display: none;
+
+        @media only screen and (max-width: $bp-mobile) {
+            display: block;
+            text-align: center;
+            font-size: 2.8rem;
+            padding-bottom: 1rem;
+            font-weight: 600;
+        }
     }
 
     &__headertitlemiddle{
         text-align: center;
         font-size: 2.8rem;
+
+        @media only screen and (max-width: $bp-mobile) {
+            display: none;
+        }
     }
 
     &__headertitleright{
@@ -44,6 +63,10 @@
         line-height: 6rem;
         font-size: 1.5rem;
         cursor: pointer;
+
+        @media only screen and (max-width: $bp-md) {
+            display: none;
+        }
 
         li:hover{
             transform: scale(1.02);
@@ -61,6 +84,7 @@
         grid-template-columns: repeat(4, 1fr);
         flex: auto;
         grid-row-gap: 2rem;
+        padding-bottom: 2rem;
 
         @media only screen and (max-width: $bp-md) {
             grid-template-columns: repeat(3, 1fr);
