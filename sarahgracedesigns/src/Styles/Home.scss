@@ -53,6 +53,7 @@
 
 .shopfromhome{
     display: flex;
+    justify-content: center;
     flex: 1 1 0px;
 
     @media only screen and (max-width: $bp-md) {
