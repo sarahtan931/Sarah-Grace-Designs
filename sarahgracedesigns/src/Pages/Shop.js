@@ -88,7 +88,6 @@ export default function Shop(props) {
   }
 
   const updateFilter = (filter) => {
-    console.log('getting with', dict[filter], filter)
     const filterEndpoint = dict[filter];
     getProducts(filterEndpoint, filter);
 

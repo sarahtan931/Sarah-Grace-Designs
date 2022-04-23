@@ -8,6 +8,12 @@ import Footer from './Components/Footer';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
 import Cart from './Pages/Cart';
+import Checkout from './Pages/Checkout';
+import {loadStripe} from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+
+
+const stripePromise = loadStripe(process.env.REACT_APP_PUBLISHABLE_KEY);
 
 const App = () => (
   <div className='content'>
@@ -25,6 +31,7 @@ const App = () => (
       <Route path="/login" element={<Login></Login>}></Route>
       <Route path="/register" element={<Register></Register>}></Route>
       <Route path="/cart" element={<Cart></Cart>}></Route>
+       <Route path="/checkout" element={<Elements stripe={stripePromise}><Checkout></Checkout></Elements>}></Route>
     </Routes>
     <Footer></Footer>
   </Router>
