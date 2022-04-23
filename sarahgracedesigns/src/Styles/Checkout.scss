@@ -1,0 +1,278 @@
+@import './Variables.scss';
+
+.checkout {
+    display: flex;
+
+    @media only screen and (max-width: $bp-sm) {
+        flex-direction: column;
+    }
+
+    &__info {
+        margin: 2rem;
+        flex-basis: 60%;
+    }
+
+    &__review {
+        flex-basis: 40%;
+        margin: 2rem;
+        padding-right: 3rem;
+
+        @media only screen and (max-width: $bp-md) {
+            padding-right: 0;
+        }
+    }
+
+    &__cardbox {
+        width: 100%;
+        border: 1px solid grey;
+        border-radius: 5px;
+        margin: .5rem;
+        padding-left: .5rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    &__subtitle {
+        font-size: 2rem;
+        padding-left: .5rem;
+        padding-top: 1rem;
+    }
+
+    &__input {
+        width: 100%;
+        height: 3.5rem;
+        border: 1px solid grey;
+        border-radius: 5px;
+        margin: .5rem;
+        padding-left: .5rem;
+        cursor: pointer;
+    }
+
+    &__flexinput {
+        width: calc(100% + 1.5rem);
+        display: flex;
+    }
+
+    &__infobox {
+        width: 90%;
+        margin-left: 5%;
+    }
+
+}
+
+.validationmsg{
+    color: red;
+    font-size: 1rem;
+    margin-top: 1rem;
+}
+
+.checkoutbutton:disabled{
+    background-color: gray;
+}
+
+.checkoutbuttonbox{
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+}
+
+.checkoutbutton {
+    border: none;
+    cursor: pointer;
+    color: white;
+    background-color: black;
+    width: 26rem;
+    height: 5rem;
+    font-size: 2rem;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    margin-top: .5rem;
+
+    @media only screen and (max-width: $bp-sm) {
+        width: 100%;
+    }
+}
+
+.checkoutbutton:hover:enabled{
+    background-color: #7e9bd2;
+    border: 0;
+}
+
+.productsummary {
+    display: flex;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    justify-content: space-between;
+
+    &__img {
+        height: 6rem;
+        width: 6rem;
+        object-fit: cover;
+        border-radius: 2px;
+    }
+
+    &__left {
+        display: flex;
+    }
+
+    &__title {
+        padding-left: 2rem;
+        padding-top: .5rem;
+        font-size: 1.8rem;
+    }
+
+    &__price {
+        font-size: 1.2rem;
+        padding-top: .5rem;
+        padding-right: 1rem;
+    }
+
+    &__imagebox {
+        position: relative;
+    }
+
+    &__quantity {
+        position: absolute;
+        background-color: black;
+        color: white;
+        height: 20px;
+        width: 20px;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        right: -8px;
+        top: -8px;
+    }
+}
+
+.checkoutlogo{
+    display: flex;
+    justify-content: center;
+
+}
+
+.checkoutback{
+    font-size: 1rem;
+    padding: 1rem;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+////////checkoutsummary
+.checkoutsummary{
+    margin-top: 4rem;
+    background-color: #F3F5F6;
+    border-radius: 5px;
+    max-width: 55rem;
+    margin: auto;
+    font-size: 2rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    
+    &__title {
+        font-size: 2.2rem;
+    }
+
+    &__productbox{
+        margin-top: 1rem;
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+        max-height: 20rem;
+        overflow-y: scroll;
+    }
+
+    &__productbox::-webkit-scrollbar-track {
+        padding: 2px 0;
+        background-color: #ffffff;
+    }
+
+    &__productbox::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &__productbox::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+        background-color: black
+    }
+
+    &__heading {
+        font-size: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        padding: .5rem 0;
+    }
+
+    &__box {
+        border-top: 1px solid black;
+    }
+
+    &__total {
+        padding-top: 1rem;
+    }
+
+    &__button {
+        padding: 1rem;
+        margin-top: 2rem;
+        background-color: black;
+        color: white;
+        text-align: center;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    &__button:hover {
+        background-color: #7e9bd2;
+    }
+
+}
+
+
+/////////
+////////checkout success
+
+.checkoutsuccess{
+    font-size: 2rem;
+    text-align: center;
+
+    &__icon{
+        font-size: 10rem;
+        color: rgb(143, 209, 143);
+    }
+
+    &__txt1, &__txt2, &__txt3{
+        padding: 1rem;
+    }
+
+    &__txt1{
+        font-size: 2.8rem;
+    }
+
+    &__txt3{
+        font-size: 1.8rem;
+    }
+
+    &__button{
+        background-color: black;
+        color: white;
+        border: none;
+        width: 30rem;
+        height: 6rem;
+        border-radius: 5px;
+        margin: auto;
+        margin-top: 1rem;
+        font-size: 2rem;
+    }
+
+    &__button:hover{
+        background-color: #7e9bd2;
+    }
+}
+
+//////
+

@@ -8,12 +8,14 @@ import { useModal } from 'react-hooks-use-modal';
 import ComingSoon from '../Components/ComingSoon';
 import '../Styles/Cart.scss';
 import configdata from '../config.json';
+import { useNavigate } from 'react-router-dom';
 
 export default function Cart() {
     const [products, setProducts] = useState([]);
     const [subtotal, setSubtotal] = useState(0);
     const email = localStorage.getItem('email');
     const url = configdata.url;
+    const navigate = useNavigate();
     const [Modal, openModal, closeModal] = useModal('root', {
         preventScroll: true,
         closeOnOverlayClick: true,
@@ -117,7 +119,8 @@ export default function Cart() {
     //function to open the modal
     function ModalOpenHelper(e) {
         e.stopPropagation();
-        openModal();
+        navigate('/checkout', {state:{products: products, subtotal: subtotal}})
+      //  openModal();
     }
 
     //function to close modal
