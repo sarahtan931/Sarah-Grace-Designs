@@ -7,6 +7,11 @@ The SarahGraceDesigns site allows users to browse, filter and sort all products.
 Users are able to view products, add them to their cart and eventually check out items. This site also includes functionality to create an account
 to allow for saved carts, lists and faster checkout. All products, images and designs were personally created for this website.
 
+## Project Walkthrough
+
+https://user-images.githubusercontent.com/60834355/164934267-f809e826-d63b-4fc4-b84d-0096defb2829.mp4
+
+
 ## Design 
 This website is desgned to be scalable with multiple new products, users and filters. For this reason, all images are stores on an Amazon S3 bucket, since it is efficient 
 and cost effective. To allow for scalability and simplicity of the structured data, all product information is stored in a relation database (postgres)
@@ -20,16 +25,17 @@ Figma Link: https://www.figma.com/file/6Fcnx1BsJukpsPZJzORcks/Sarah-Grace-Design
 <li> Amazon S3 Bucket </li>
 <li> Express </li>
 <li> Sass </li>
-<li> Stripe (Coming Soon)</li>
+<li> Stripe</li>
+<li> NodeMailer </li>
 
 ## Functionalities
 * View/Sort/Filter Products
 * Register Account 
 * Login
 * View/Add/Edit Cart (authenticated and non authenticated users)
+* Checkout 
 
 ### Functionalities Coming Soon
-* Checkout 
 * View Past Orders
 * View Wishlist
 * Edit old products
