@@ -4,12 +4,27 @@ import '../Styles/Checkout.scss';
 import axios from 'axios';
 import configdata from '../config.json';
 import CheckoutSummary from '../Components/CheckoutSummary';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import CheckoutSuccess from '../Components/CheckoutSuccess';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import '../Styles/Rotating.scss';
+import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 
 export default function Checkout() {
     const [products, setProducts] = useState([]);
     const [subtotal, setSubtotal] = useState(0);
-    const email = localStorage.getItem('email');
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState(localStorage.getItem('email'));
+    const [address, setAddress] = useState("");
+    const [city, setCity] = useState("");
+    const [country, setCountry] = useState("");
+    const [state, setState] = useState("");
+    const [postalCode, setPostalCode] = useState("");
+    const [validationError, setValidationError] = useState("");
+    const [checkoutSuccess, setCheckoutSuccess] = useState(false);
+    const [disableOrder, setDisableOrder] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
     const stripe = useStripe();
     const elements = useElements();
     const url = configdata.url;
@@ -34,9 +49,13 @@ export default function Checkout() {
         hidePostalCode: true
     }
 
-
     //when initiating cart, if user authenticated get values from db else get values from local storage
     useEffect(() => {
+        const name = localStorage.getItem("name");
+        if (name != null && name != undefined) {
+            setName(name);
+        }
+
         if (location.state.products != null && location.state.subtotal != null) {
             setProducts(location.state.products);
             setSubtotal(location.state.subtotal);
@@ -46,7 +65,6 @@ export default function Checkout() {
                 GetUserCart();
             } else {
                 GetLocalCart();
-                Products();
             }
         }
     }, []);
@@ -95,20 +113,38 @@ export default function Checkout() {
         });
     }
 
+    const NavigateCart = () => { navigate('/cart') }
+    const NavigateShopping = () => { navigate('/shop') }
 
-    const handleFormSubmit = async () => {
+    const handleFormSubmit = () => {
+        const reEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const isValid = email.length > 0 && name.length > 0 && address.length > 0 && city.length > 0 && country.length > 0 && state.length > 0 && postalCode.length > 0;
+        if (!isValid) {
+            setValidationError("Please Fill All Fields")
+        } else if (!reEmail.test(email)) {
+            setValidationError("Please Input A Valid Email")
+        } else {
+            setValidationError("");
+            setDisableOrder(true);
+            setLoading(true);
+            handlePayment();
+        }
+    }
+
+
+    const handlePayment = async () => {
+        console.log('int handle paymn')
         //getting card element
         const cardElement = elements.getElement(CardElement);
 
-        //unhardcode this
         const billingDetails = {
-            name: 'sarah',
-            email: 'test@test.com',
+            name: name,
+            email: email,
             address: {
-                city: 'kinsgtons',
-                line1: '101 address',
-                state: 'on',
-                postal_code: 'ktm 24s'
+                city: city,
+                line1: address,
+                state: state,
+                postal_code: postalCode
             }
         };
 
@@ -119,59 +155,83 @@ export default function Checkout() {
             billing_details: billingDetails
         })
 
+        const amount = Math.round(((subtotal * 1.13) + 12) * 100);
+        console.log('amount', amount)
+
         //getting payment confirmation
-        axios.post(`${url}/api/payment_intents`, { amount: 123 }).then(async (response) => {
+        axios.post(`${url}/api/payment_intents`, { amount: amount }).then(async (response) => {
             const clientSecret = response.data;
             const confirmCardPayment = await stripe.confirmCardPayment(clientSecret, {
                 payment_method: paymentMethodReq.paymentMethod.id
             })
 
-            //make success page
-            console.log(confirmCardPayment);
-
+            if (confirmCardPayment.paymentIntent) {
+                setCheckoutSuccess(true)
+            } else if(confirmCardPayment.error){
+                setDisableOrder(false);
+                setLoading(false);
+                setValidationError(confirmCardPayment.error?.message)
+            }
         }).catch((err) => {
             console.log(err)
+            setDisableOrder(false);
+            setLoading(false);
+            setValidationError("Error Processing Request")
         });
 
     }
 
-
+    const handleNameChange = (e) => { setName(e.target.value) }
+    const handleEmailChange = (e) => { setEmail(e.target.value) }
+    const handleAddressChange = (e) => { setAddress(e.target.value) }
+    const handleCityChange = (e) => { setCity(e.target.value) }
+    const handleCountryChange = (e) => { setCountry(e.target.value) }
+    const handleStateChange = (e) => { setState(e.target.value) }
+    const handlePostalCodeChange = (e) => { setPostalCode(e.target.value) }
 
     return (
         <div>
-            <div className='checkoutback'>Back to Cart</div>
+            {!checkoutSuccess && <div onClick={NavigateCart} className='checkoutback'>Back to Cart</div>}
+            {checkoutSuccess && <div onClick={NavigateShopping} className='checkoutback'>Back to Shopping</div>}
             <div className="checkoutlogo">
                 <img src="https://sarahgracedesignsbucket.s3.amazonaws.com/SarahGraceLogo.png" alt="Sarah Grace Designs Header Image" />
             </div>
             <div className='checkout'>
                 <div className="checkout__info">
-                    <div className="checkout__infobox">
-                        <div className="checkout__contactbox">
-                            <p className="checkout__subtitle">Contact Information</p>
-                            <input className="checkout__input" type="title" placeholder='Name' name="name" ></input>
-                            <input className="checkout__input" type="title" placeholder='Email' name="email" ></input>
-                        </div>
-                        <div className="checkout__shipping">
-                            <p className="checkout__subtitle">Shipping Information</p>
-                            <input className="checkout__input" type="title" placeholder='Address' name="address" ></input>
-                            <input className="checkout__input" type="title" placeholder='City' name="city" ></input>
-                            <div className='checkout__flexinput'>
-                                <input className="checkout__input" type="title" placeholder='Country' name="country" ></input>
-                                <input className="checkout__input" type="title" placeholder='State' name="state" ></input>
+                    {!checkoutSuccess &&
+                        <div className="checkout__infobox">
+                            <div className="checkout__contactbox">
+                                <p className="checkout__subtitle">Contact Information</p>
+                                <input className="checkout__input" type="title" placeholder='Name' name="name" value={name} onChange={(e) => handleNameChange(e)}></input>
+                                <input className="checkout__input" type="title" placeholder='Email' name="email" value={email} onChange={(e) => handleEmailChange(e)}></input>
                             </div>
-                            <input className="checkout__input" type="title" placeholder='Postal Code' name="postalcode" ></input>
-                        </div>
-                        <div className="checkout__payment">
-                            <p className="checkout__subtitle">Payment Information</p>
-                            <div className="checkout__cardbox">
-                                <CardElement options={cardElementOptions}></CardElement>
+                            <div className="checkout__shipping">
+                                <p className="checkout__subtitle">Shipping Information</p>
+                                <input className="checkout__input" type="title" placeholder='Address' name="address" value={address} onChange={(e) => handleAddressChange(e)}></input>
+                                <input className="checkout__input" type="title" placeholder='City' name="city" value={city} onChange={(e) => handleCityChange(e)}></input>
+                                <div className='checkout__flexinput'>
+                                    <input className="checkout__input" type="title" placeholder='Country' name="country" value={country} onChange={(e) => handleCountryChange(e)}></input>
+                                    <input className="checkout__input" type="title" placeholder='State' name="state" value={state} onChange={(e) => handleStateChange(e)}></input>
+                                </div>
+                                <input className="checkout__input" type="title" placeholder='Postal Code' name="postalcode" value={postalCode} onChange={(e) => handlePostalCodeChange(e)}></input>
                             </div>
-                        </div>
-                    </div>
+                            <div className="checkout__payment">
+                                <p className="checkout__subtitle">Payment Information</p>
+                                <div className="checkout__cardbox">
+                                    <CardElement options={cardElementOptions}></CardElement>
+                                </div>
+                            </div>
+                        </div>}
+                    {checkoutSuccess && <CheckoutSuccess></CheckoutSuccess>}
                 </div>
                 <div className="checkout__review">
                     <CheckoutSummary subtotal={subtotal} products={products}></CheckoutSummary>
-                        <button onClick={handleFormSubmit} className="checkoutbutton">Order Now</button>
+                    <div className='checkoutbuttonbox'>
+                        <div className='validationmsg'> {validationError}</div>
+                        {!checkoutSuccess && <button onClick={handleFormSubmit} className="checkoutbutton" disabled={disableOrder}>
+                            {loading && <FontAwesomeIcon icon={faRefresh} className="rotating"></FontAwesomeIcon>}
+                            Order Now</button>}
+                    </div>
                 </div>
             </div>
 

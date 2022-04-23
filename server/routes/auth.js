@@ -22,7 +22,8 @@ const stripe = new Stripe(process.env.SECRET_KEY);
 router.post('/payment_intents', async (req, res) => {
   try {
     const { amount } = req.body;
-  
+    
+    //send cart data back, validate before making payment
     const paymentIntent = await stripe.paymentIntents.create({
       amount,
       currency: 'usd'
