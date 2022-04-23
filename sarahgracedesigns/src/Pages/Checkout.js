@@ -133,7 +133,6 @@ export default function Checkout() {
 
 
     const handlePayment = async () => {
-        console.log('int handle paymn')
         //getting card element
         const cardElement = elements.getElement(CardElement);
 
@@ -166,6 +165,7 @@ export default function Checkout() {
             })
 
             if (confirmCardPayment.paymentIntent) {
+                processOrder();
                 setCheckoutSuccess(true)
             } else if(confirmCardPayment.error){
                 setDisableOrder(false);
@@ -179,6 +179,14 @@ export default function Checkout() {
             setValidationError("Error Processing Request")
         });
 
+    }
+
+    const processOrder = () => {
+        try{
+            //send order details to process order in the db
+        }catch(ex){
+            //if error in order processing call another endpoint to send admin all error details
+        }
     }
 
     const handleNameChange = (e) => { setName(e.target.value) }
