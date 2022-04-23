@@ -25,7 +25,6 @@ router.post('/payment_intents', async (req, res) => {
 
 router.post('/processorder', async (req, res) => {
   try {
-    let testAccount = await nodemailer.createTestAccount();
     let userId = null;
     const body = req.body;
     const name = body.name;
@@ -61,23 +60,24 @@ router.post('/processorder', async (req, res) => {
 
     //TODO: send confirmation email to user
     let transporter = nodemailer.createTransport({
-      host: "smtp.ethereal.email",
-      port: 587,
-      secure: false, // true for 465, false for other ports
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true, // true for 465, false for other ports
       auth: {
-        user: testAccount.user, // generated ethereal user
-        pass: testAccount.pass, // generated ethereal password
+        user: process.env.NODEMAILER_EMAIL, // generated ethereal user
+        pass: process.env.NODEMAILER_PASS, // generated ethereal password
       },
     });
 
     // send mail with defined transport object
     let info = await transporter.sendMail({
-      from: '"Sarah Grace Designs" <foo@example.com>', // sender address
-      to: `${email}`, // list of receivers
+      from: '"Sarah Grace Designs" <noreply@sarahgracedesigns.co>', // sender address
+      to: {email}, // list of receivers
       subject: "Sarah Grace Designs - We Have Received Your Order", // Subject line
       text: "Thank you for ordering from Sarah Grace Designs.", // plain text body
       html: "<b>Thank you for ordering from Sarah Grace Designs.</b>", // html body
     });
+    console.log(info)
 
 
     res.status(200).send("Order Processed Succesfully")
