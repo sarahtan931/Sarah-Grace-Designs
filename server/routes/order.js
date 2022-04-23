@@ -3,6 +3,7 @@ const Stripe = require('stripe');
 const stripe = new Stripe(process.env.SECRET_KEY);
 const express = require("express");
 const router = new express.Router();
+const pool = require("../db");
 
 
 router.post('/payment_intents', async (req, res) => {
@@ -22,20 +23,50 @@ router.post('/payment_intents', async (req, res) => {
   } 
 })
 
-router.post('/processorder', () => {
-    //find order items decrease item quantity in db 
+router.post('/processorder', async(req, res) => {
+  try{
+    let userId = null;
+    const body = req.body;
+    const name = body.name;
+    const email = body.email;
+    const subtotal = body.subtotal;
+    const tax = body.tax;
+    const shipping = body.shipping;
+    const city = body.city;
+    const address = body.address;
+    const state = body.state;
+    const postalcode = body.postalCode;
+    const products = body.products;
+    const total = tax+ subtotal+shipping;
+    //get user id 
+    var userIdQuery = await pool.query(`SELECT id FROM users WHERE email='${email}'`);
 
     //delete user cart items
-
+    if (userIdQuery.rowCount > 0){
+      userId = userIdQuery.rows[0].id;
+      await pool.query(`DELETE from cartitem WHERE userid = ${userId}`)
+    }
+ 
     //add new order to db with user id 
+    var order = await pool.query(`INSERT INTO orders (status, name, email, userid, subtotal, tax, shipping, total, city, address, state, postalcode) VALUES ('Ordered', '${name}', '${email}', ${userId}, ${subtotal}, ${tax}, ${shipping}, ${total}, '${city}', '${address}', '${state}', '${postalcode}') RETURNING *;`);
+    var orderId = order.rows[0].id;
 
-    //add order items to order  
+    for (const product of products) {
+     //add order items to order  
+     //find order items decrease item quantity in db 
+      await pool.query(`INSERT INTO orderitem (orderid, productid, orderquantity) VALUES (${orderId}, ${product.productid}, ${product.cartitemquantity})`);
+      await pool.query(`UPDATE product SET quantity = quantity - 1 WHERE id=${product.productid}`);
+    };
 
-    //send confirmation email to user
+    //TODO: send confirmation email to user
+    res.status(200).send("Order Processed Succesfully")
+  }catch(ex){
+    console.log(ex)
+  }
 })
 
 router.get('/previousorders', () => {
-    //function to get all previous order
+    //TODO: function to get all previous orders
 })
 
 module.exports = router;

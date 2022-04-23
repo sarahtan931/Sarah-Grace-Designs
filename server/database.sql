@@ -58,4 +58,30 @@ CREATE TABLE productcategories(
     FOREIGN KEY productid REFERENCES product(id)
 );
 
+CREATE TABLE orders(
+    id SERIAL PRIMARY KEY, 
+    status VARCHAR(255),
+    name VARCHAR(255),
+    email VARCHAR(255),
+    userid INT,
+    subtotal NUMERIC,
+    tax NUMERIC,
+    shipping  NUMERIC,
+    total  NUMERIC,
+    city VARCHAR(255),
+    address VARCHAR(1024),
+    state VARCHAR(255),
+    postalcode VARCHAR(255),
+    FOREIGN KEY userid REFERENCES users(id)
+)
+
+CREATE TABLE orderitem(
+    id SERIAL PRIMARY KEY,
+    orderid INT,
+    productid INT, 
+    orderquantity INT,
+    FOREIGN KEY (orderid) REFERENCES orders(id),
+    FOREIGN KEY (productid) REFERENCES product(id)
+)
+
 ALTER TABLE cart ALTER COLUMN totalprice SET DEFAULT 0;

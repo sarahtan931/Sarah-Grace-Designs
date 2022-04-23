@@ -13,8 +13,11 @@ import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 export default function Checkout() {
     const [products, setProducts] = useState([]);
     const [subtotal, setSubtotal] = useState(0);
+    const [tax, setTax] = useState(0);
+    const shippingPrice = 12;
+    const [totalPrice, setTotalPrice] = useState(0);
     const [name, setName] = useState("");
-    const [email, setEmail] = useState(localStorage.getItem('email'));
+    const [email, setEmail] = useState(localStorage.getItem('email') ?? "");
     const [address, setAddress] = useState("");
     const [city, setCity] = useState("");
     const [country, setCountry] = useState("");
@@ -131,61 +134,78 @@ export default function Checkout() {
         }
     }
 
-
-    const handlePayment = async () => {
-        //getting card element
-        const cardElement = elements.getElement(CardElement);
-
-        const billingDetails = {
-            name: name,
-            email: email,
-            address: {
-                city: city,
-                line1: address,
-                state: state,
-                postal_code: postalCode
-            }
-        };
-
-        //making payment request
-        const paymentMethodReq = await stripe.createPaymentMethod({
-            type: 'card',
-            card: cardElement,
-            billing_details: billingDetails
-        })
-
-        const amount = Math.round(((subtotal * 1.13) + 12) * 100);
-        console.log('amount', amount)
-
-        //getting payment confirmation
-        axios.post(`${url}/api/payment_intents`, { amount: amount }).then(async (response) => {
-            const clientSecret = response.data;
-            const confirmCardPayment = await stripe.confirmCardPayment(clientSecret, {
-                payment_method: paymentMethodReq.paymentMethod.id
+        const handlePayment = async () => {
+            //getting card element
+            const cardElement = elements.getElement(CardElement);
+    
+            const billingDetails = {
+                name: name,
+                email: email,
+                address: {
+                    city: city,
+                    line1: address,
+                    state: state,
+                    postal_code: postalCode
+                }
+            };
+    
+            //making payment request
+            const paymentMethodReq = await stripe.createPaymentMethod({
+                type: 'card',
+                card: cardElement,
+                billing_details: billingDetails
             })
-
-            if (confirmCardPayment.paymentIntent) {
-                processOrder();
-                setCheckoutSuccess(true)
-            } else if(confirmCardPayment.error){
+    
+            setTax(Math.round(.13*subtotal));
+            setTotalPrice(tax + subtotal + shippingPrice);
+            const amount = Math.round(((subtotal * 1.13) + 12) * 100);
+           
+            //getting payment confirmation
+            axios.post(`${url}/api/payment_intents`, { amount: amount }).then(async (response) => {
+                const clientSecret = response.data;
+                const confirmCardPayment = await stripe.confirmCardPayment(clientSecret, {
+                    payment_method: paymentMethodReq.paymentMethod.id
+                })
+    
+                if (confirmCardPayment.paymentIntent) {
+                    processOrder();
+                    setCheckoutSuccess(true)
+                } else if(confirmCardPayment.error){
+                    setDisableOrder(false);
+                    setLoading(false);
+                    setValidationError(confirmCardPayment.error?.message)
+                }
+            }).catch((err) => {
+                console.log(err)
                 setDisableOrder(false);
                 setLoading(false);
-                setValidationError(confirmCardPayment.error?.message)
-            }
-        }).catch((err) => {
-            console.log(err)
-            setDisableOrder(false);
-            setLoading(false);
-            setValidationError("Error Processing Request")
-        });
-
-    }
+                setValidationError("Error Processing Request")
+            });
+    
+        }
 
     const processOrder = () => {
-        try{
+        let body = {
+            name: name,
+            email: email,
+            subtotal: subtotal,
+            tax: tax,
+            shipping: shippingPrice,
+            city: city,
+            address: address,
+            state: state,
+            postalCode: postalCode,
+            products: products
+        }
+        try {
             //send order details to process order in the db
-        }catch(ex){
-            //if error in order processing call another endpoint to send admin all error details
+            axios.post(`${url}/api/processorder`, body).then((response) => {
+                console.log('Order processed successfully', response)
+            }).catch((err) => {
+                console.log(err)
+            });
+        } catch (ex) {
+            console.log(ex)
         }
     }
 
