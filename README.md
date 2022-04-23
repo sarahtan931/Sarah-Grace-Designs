@@ -9,8 +9,7 @@ to allow for saved carts, lists and faster checkout. All products, images and de
 
 ## Project Walkthrough
 
-https://user-images.githubusercontent.com/60834355/164934267-f809e826-d63b-4fc4-b84d-0096defb2829.mp4
-
+https://user-images.githubusercontent.com/60834355/164947997-c6d321ce-6901-4c06-88cd-efc9d8d5e6bb.mp4
 
 ## Design 
 This website is desgned to be scalable with multiple new products, users and filters. For this reason, all images are stores on an Amazon S3 bucket, since it is efficient 
